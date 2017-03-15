@@ -41,6 +41,8 @@
 #  home_wiki_id          :integer
 #  recent_revision_count :integer          default(0)
 #  needs_update          :boolean          default(FALSE)
+#  chatroom_id           :string(255)
+#  flags                 :text(65535)
 #
 
 require 'rails_helper'
@@ -218,8 +220,8 @@ describe Course, type: :model do
       let(:role2) { CoursesUsers::Roles::STUDENT_ROLE }
       let(:user3) { user1.id }
       let(:role3) { CoursesUsers::Roles::INSTRUCTOR_ROLE }
-      it 'returns 1' do
-        expect(subject).to eq(1)
+      it 'returns 2' do
+        expect(subject).to eq(2)
       end
     end
   end

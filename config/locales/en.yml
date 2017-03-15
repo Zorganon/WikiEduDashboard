@@ -142,6 +142,7 @@ en:
     view_on_wiki: View on wiki
     # This is a maintence script message
     views_added: "Added %{count} new views for %{title}"
+    edit_size: Edit Size
     wp10: Structural Completeness
     wp10_doc: >
       The 'Structural Completeness' score represents how closely an article fits
@@ -156,6 +157,7 @@ en:
   assignments:
     article: The article %{title} was assigned
     already_exists: This assignment already exists!
+    title_too_large: The title shouldn't exceed 255 characters
     assignees: Assignee(s)
     assign_other: Assign an article
     add_available: Add an available article
@@ -207,6 +209,9 @@ en:
       the text in this area will be copied over as a description on the program page
     title: Title
     use_start_end_dates: Use start and end dates
+
+  chat:
+    label: Chat
 
   courses:
     activity: Activity
@@ -287,13 +292,19 @@ en:
       start_date: Start date
       start_date_placeholder: Start date (YYYY-MM-DD)
       subject: Subject
+      update_scheduled: >
+        Update scheduled. The data will be updated along with all current
+        programs during the next update cycle. This typically takes
+        several hours.
     current: Current Courses
     delete_course: Delete course
     dismiss_survey: Dismiss
     dismiss_survey_confirm: Are you sure you want to permanently dismiss this survey?
     duration: Course Duration
     edit_course_dates: Edit Course Dates
+    enable_chat: Enable chat
     end: End
+    ended: The course has ended.
     enroll: Enroll
     enrollment: Enrollment
     courses_enrolled: Courses enrolled
@@ -334,7 +345,7 @@ en:
       This will post a reminder on the talk pages for all students who overdue
       for completing assigned training modules. Are you sure you want to do this?
     no_available_actions: No available actions
-    overview: Overview
+    overview: Home
     passcode: Passcode
     passcode_none: No passcode
     passcode_prompt: "Enter the passcode to join:"
@@ -347,6 +358,7 @@ en:
     revisions_doc: The number of edits in the past %{timeframe} days
     revisions_none: This course has no recent Wikipedia editing activity.
     school: School
+    school_and_term: Institution/Term
     start: Start
     start_typing: Start typing
     students: Students
@@ -440,6 +452,7 @@ en:
     published: "This project has been published! Editors may enroll by visiting the following URL:"
     revisions_none: This project has no recent editing activity.
     school: Institution
+    school_and_term: Institution/When
     student_editors: Editors
     students: Editors
     students_none: This project has no editors enrolled.
@@ -521,7 +534,9 @@ en:
     diff: diff
     diff_show: Show
     diff_hide: Hide
+    edit_time_span: Edits occurred from %{first_time} to %{last_time}
     edited_by: Edited By
+    edited_on: Edited on %{edit_date}
     loading: Loading revisions...
     none: This course has no recent editing activity.
     time_doc: The time of each revision in your local time
@@ -670,6 +685,7 @@ en:
     student_impact: Total impact made by %{username} as a student
     instructor_impact: Total impact made by %{username} as an instructor
     instructors_student_impact: Total impact made by %{username}'s students
+
     role:
       visitor: Visitor
       student: Student
@@ -677,6 +693,15 @@ en:
       campus_volunteer: Campus Volunteer
       online_volunteer: Online Volunteer
       wiki_ed_staff: Wiki Ed Staff
+
+  user_profiles:
+    student_impact: Total impact made by %{username} as a student
+    instructor_impact: Total impact made by %{username} as an instructor
+    instructors_student_impact: Total impact made by %{username}'s students
+    disclaimer: The information you provide will be made available publicly.
+    bio_placeholder: Add your Bio (optional)
+    location_placeholder: Add your location (optional)
+    institution_placeholder: Institution name (optional)
 
   wiki_edits:
     notify_overdue:
@@ -791,3 +816,6 @@ en:
       link: "Take Survey"
     follow_up:
       message: "This is a reminder about the survey for your course, %{course_title}. Feedback from this survey helps us to improve our support for Wikipedia assignments like yours."
+
+  feedback_form_responses:
+    no_responses: "There are no feedback responses yet."

@@ -30,6 +30,10 @@ import TrainingApp from '../training/components/training_app.jsx';
 import TrainingModuleHandler from '../training/components/training_module_handler.jsx';
 import TrainingSlideHandler from '../training/components/training_slide_handler.jsx';
 
+import RocketChat from '../components/common/rocket_chat.jsx';
+
+import ContributionStats from '../components/user_profiles/contribution_stats.jsx';
+
 // Handle scroll position for back button, hashes, and normal links
 browserHistory.listen(location => {
   setTimeout(() => {
@@ -69,6 +73,8 @@ const routes = (
     <Route path="courses">
       <Route path=":course_school/:course_title" component={Course}>
         <IndexRoute component={OverviewHandler} />
+        <Route path="home" component={OverviewHandler} />
+        {/* The overview route path should not be removed in order to preserve the default url */}
         <Route path="overview" component={OverviewHandler} />
         <Route path="timeline" component={TimelineHandler}>
           <Route path="wizard" component={Wizard} />
@@ -78,6 +84,7 @@ const routes = (
         <Route path="students" component={StudentsHandler} />
         <Route path="articles" component={ArticlesHandler} />
         <Route path="uploads" component={UploadsHandler} />
+        <Route path="chat" component={RocketChat} />
       </Route>
     </Route>
     <Route path="course_creator" component={CourseCreator} />
@@ -85,6 +92,7 @@ const routes = (
       <Route path=":library_id/:module_id" component={TrainingModuleHandler} />
       <Route path="/training/:library_id/:module_id/:slide_id" component={TrainingSlideHandler} />
     </Route>
+    <Route path="users/:username" component={ContributionStats} />
   </Route>
 );
 

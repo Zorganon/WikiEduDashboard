@@ -201,7 +201,7 @@ sr-ec:
     nocourses: Не суделујете ни у једном курсу.
     none: Нема
     no_available_actions: Нема доступних активности
-    overview: Преглед
+    overview: Почетна
     passcode: Поштански број
     passcode_none: Нема шифре
     published: 'Ваш курс је објављен! Студенти се могу уписати тако што ће посетити
@@ -282,6 +282,7 @@ sr-ec:
     edit_count_description: Укупно измена
     per_user: '%{number}/user'
     revisions: Скорашње измене
+    tags: Ознаке
     view_count_description: Прегледа чланка
     view: Прегледа
     word_count: Додате речи

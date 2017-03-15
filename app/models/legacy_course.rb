@@ -41,6 +41,8 @@
 #  home_wiki_id          :integer
 #  recent_revision_count :integer          default(0)
 #  needs_update          :boolean          default(FALSE)
+#  chatroom_id           :string(255)
+#  flags                 :text(65535)
 #
 
 # Course type for courses imported from the MediaWiki EducationProgram extension
@@ -61,5 +63,9 @@ class LegacyCourse < Course
 
   def use_start_and_end_times
     false
+  end
+
+  def multiple_roles_allowed?
+    true
   end
 end

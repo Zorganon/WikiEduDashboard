@@ -24,6 +24,11 @@ ENV['enable_legacy_courses'] = 'true'
 ENV['enable_get_help_button'] = 'true'
 ENV['enable_language_switcher'] = 'true'
 ENV['training_path'] = 'training_content/wiki_ed'
+ENV['enable_chat'] = 'true'
+ENV['chat_admin_username'] = 'username'
+ENV['chat_admin_password'] = 'password'
+ENV['chat_server'] = 'https://dashboardchat.wmflabs.org'
+ENV['SF_SERVER'] = 'https://cs54.salesforce.com/'
 
 Rails.application.configure do
   # Settings specified here will take

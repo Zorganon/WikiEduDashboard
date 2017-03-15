@@ -19,10 +19,18 @@ Rails.application.routes.draw do
                           as: :true_destroy_user_session
   end
 
+  #UserProfilesController
+  controller :user_profiles do
+    get 'users/:username' => 'user_profiles#show' , constraints: { username: /.*/ }
+    get 'user_stats' => 'user_profiles#stats_data'
+    post 'users/update/:username' => 'user_profiles#update'
+  end
+
   # Users
-  controller :users do
-    get 'users/revisions' => 'users#revisions', :as => :user_revisions
-    get 'users/:username' => 'users#show', constraints: { username: /.*/ }
+  resources :users, only: [:index, :show], param: :username, constraints: { username: /.*/ } do
+    collection do
+      get 'revisions'
+    end
   end
 
   resources :assignments
@@ -83,11 +91,15 @@ Rails.application.routes.draw do
 
   get 'revisions' => 'revisions#index'
 
-  get 'articles/wp10' => 'articles#wp10'
+  get 'articles/article_data' => 'articles#article_data'
   get 'articles/details' => 'articles#details'
 
   resources :courses_users, only: [:index]
-  resources :alerts, only: [:create]
+  resources :alerts, only: [:create] do
+    member do
+      put 'resolve'
+    end
+  end
 
   # Article Finder
   if Features.enable_article_finder?
@@ -152,6 +164,7 @@ Rails.application.routes.draw do
   get 'training/:library_id' => 'training#show', as: :training_library
   get 'training/:library_id/:module_id' => 'training#training_module', as: :training_module
   post 'training_modules_users' => 'training_modules_users#create_or_update'
+  get 'reload_trainings' => 'training#reload'
 
   get 'training_status' => 'training_status#show'
 
@@ -215,6 +228,18 @@ Rails.application.routes.draw do
   get '/feedback_form_responses/:id' => 'feedback_form_responses#show', as: :feedback_form_response
   post '/feedback_form_responses' => 'feedback_form_responses#create'
   get '/feedback/confirmation' => 'feedback_form_responses#confirmation'
+
+  # Chat
+  if Features.enable_chat?
+    get '/chat/login' => 'chat#login'
+    put '/chat/enable_for_course/:course_id' => 'chat#enable_for_course'
+  end
+
+  # Salesforce
+  if Features.wiki_ed?
+    put '/salesforce/link/:course_id' => 'salesforce#link'
+    get '/salesforce/create_media' => 'salesforce#create_media'
+  end
 
   resources :admin
   resources :alerts_list

@@ -3,6 +3,7 @@
 # Export driver: phpyaml
 # Author: Aftabuzzaman
 # Author: Bodhisattwa
+# Author: Elias Ahmmad
 # Author: Kayser Ahmad
 # Author: আজিজ
 ---
@@ -64,6 +65,8 @@ bn:
   campaign:
     campaign: প্রচারাভিযান
     none: কোনটিই নয়
+  chat:
+    label: চ্যাট
   courses:
     activity: কর্মকাণ্ড
     actions: কার্যসমূহ
@@ -71,6 +74,8 @@ bn:
     calendar:
       legend_class_canceled: ছুটি/বাতিল
     cancel: বাতিল
+    campaign_courses: '%{title} কোর্স'
+    courses_taught: কোর্সের ধারণা
     creator:
       course_project: মূল প্রকল্প
       course_school: কোর্স বিদ্যালয়
@@ -88,13 +93,18 @@ bn:
     dismiss_survey: খারিজ
     dismiss_survey_confirm: আপনি কি নিশ্চিত যে আপনি স্থায়ীভাবে এই জরিপ খারিজ করতে
       ইচ্ছুক?
+    enable_chat: চ্যাট সক্রিয় করুন
     end: শেষ
+    ended: কোর্সটি শেষ হয়েছে।
+    courses_enrolled: কোর্সে ভর্তি
     join: যোগ দিন
     join_prompt: '''%{title}''-এ যোগ দিবেন?'
     join_successful: আপনি সফলভাবে %{title}-এ যোগ দিয়েছেন।
     my_articles: আমার নিবন্ধ
     new_week: নতুন সপ্তাহ যোগ করুন
+    nocourse: কোন কোর্সে অংশগ্রহণ করেননি।
     none: কোনটিই নয়
+    overview: প্রধান পাতা
     school: বিদ্যালয়
     start: শুরু করুন
     students: ছাত্রগণ
@@ -112,6 +122,8 @@ bn:
       other: স্বেচ্ছাসেবক
   courses_generic:
     cancel: বাতিল
+    courses_taught: প্রোগ্রামের ধারণা
+    campaign_courses: '%{title} প্রোগ্রাম'
     creator:
       course_description: প্রকল্পের বর্ণনা
       course_school: প্রতিষ্ঠান
@@ -122,6 +134,7 @@ bn:
       find: একটি প্রোগ্রাম খুঁজুন
     enroll: সম্পাদক যোগ করুন
     enrollment: অংশগ্রহণ
+    courses_enrolled: প্রোগ্রাম অংশগ্রহণ করেছে
     school: প্রতিষ্ঠান
     student_editors: সম্পাদকগণ
     students: সম্পাদকগণ
@@ -138,6 +151,7 @@ bn:
     edit_count_description: মোট সম্পাদনা
     per_user: '%{number}/ব্যবহারকারী'
     revisions: সাম্প্রতিক সম্পাদনাসমূহ
+    tags: ট্যাগসমূহ
     word_count: যুক্ত শব্দসমূহ
     word_count_average: গড় শব্দ গণনা
   namespace:
@@ -175,6 +189,7 @@ bn:
     assign_articles_done: সম্পন্ন
     contributions: ব্যবহারকারীর অবদানসমূহ
     contributions_history_full: উইকিপিডিয়ায় অবদানের পূর্ণ ইতিহাস দেখুন
+    contribution_statistics: অবদানের পরিসংখ্যান
     editors: সম্পাদকগণ
     first_name: প্রথম নাম
     last_name: শেষ নাম
@@ -188,6 +203,10 @@ bn:
     role:
       student: ছাত্র
       online_volunteer: অনলাইন স্বেচ্ছাসেবক
+  user_profiles:
+    bio_placeholder: আপনার জীবনী যোগ করুন (ঐচ্ছিক)
+    location_placeholder: আপনার অবস্থান যোগ করুন (ঐচ্ছিক)
+    institution_placeholder: ইনস্টিটিউটের নাম (ঐচ্ছিক)
   wizard:
     read_more: আরও পড়ুন
     summary: সারাংশ

@@ -114,6 +114,16 @@ const CourseStore = Flux.createStore({
           description: data.campaign.template_description
         });
       break;
+    case 'ENABLE_CHAT_SUCCEEDED':
+      setCourse(
+        { flags: { enable_chat: true } }
+      );
+      break;
+    case 'LINKED_TO_SALESFORCE':
+      setCourse(
+        { flags: data.flags }
+      );
+      break;
     default:
       // no default
   }

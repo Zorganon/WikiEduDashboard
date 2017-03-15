@@ -41,6 +41,8 @@
 #  home_wiki_id          :integer
 #  recent_revision_count :integer          default(0)
 #  needs_update          :boolean          default(FALSE)
+#  chatroom_id           :string(255)
+#  flags                 :text(65535)
 #
 
 class BasicCourse < Course
@@ -57,6 +59,10 @@ class BasicCourse < Course
   end
 
   def use_start_and_end_times
+    true
+  end
+
+  def multiple_roles_allowed?
     true
   end
 end

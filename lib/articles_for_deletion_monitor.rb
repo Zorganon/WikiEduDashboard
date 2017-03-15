@@ -20,7 +20,7 @@ class ArticlesForDeletionMonitor
 
   def create_alerts_from_page_titles
     course_articles = ArticlesCourses.joins(:article)
-                                     .where(articles: { title: @page_titles })
+                                     .where(articles: { title: @page_titles, wiki_id: @wiki.id })
     course_articles.each do |articles_course|
       create_alert(articles_course)
     end
@@ -71,6 +71,7 @@ class ArticlesForDeletionMonitor
   def alert_already_exists?(articles_course)
     Alert.exists?(article_id: articles_course.article_id,
                   course_id: articles_course.course_id,
-                  type: 'ArticlesForDeletionAlert')
+                  type: 'ArticlesForDeletionAlert',
+                  resolved: false)
   end
 end

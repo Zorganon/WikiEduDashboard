@@ -12,6 +12,7 @@
 # Author: Lemondoge
 # Author: Macofe
 # Author: Themasterriot
+# Author: Tusca
 # Author: Yllelder
 # Author: YoViajo
 ---
@@ -120,6 +121,7 @@ es:
     view_doc: La suma de todas las visitas a cada artículo durante el proyecto
     view_on_wiki: Ver en el wiki
     views_added: Se añadieron %{count} visitas nuevas para %{title}
+    edit_size: Editar tamaño
     wp10: Integridad estructural
     wp10_doc: La puntuación «Integridad estructural» representa cuánto un artículo
       encaja en el molde de un artículo maduro de la Wikipedia, según el Servicio
@@ -131,6 +133,7 @@ es:
       artículo, pero no toma en cuenta el contenido en sí mismo. (Estos resultados
       solo están disponibles para los artículos de la Wikipedia en inglés.)
   assignments:
+    article: Se asignó el artículo %{title}
     already_exists: ¡Esta tarea ya existe!
     assignees: Asignado(s)
     assign_other: Asignar un artículo
@@ -170,15 +173,23 @@ es:
     course_already_removed: '"%{title}" ya se había eliminado de la campaña "%{campaign_title}"'
     course_removed: '"%{title}" se ha eliminado de la campaña "%{campaign_title}"'
     create_campaign: Crear una campaña nueva
+    create_my_campaign: ¡Crear mi campaña!
     description: Descripción
     delete_campaign: Eliminar esta campaña
     none: Ninguno
     organizers: Organizadores
     organizer_added: '%{user} ahora es un organizador de la campaña "%{title}"'
     organizer_removed: '%{user} ya no es organizador de la campaña "%{title}"'
+    program_template: Plantilla de programa
+    program_template_tooltip: Cuando un organizador crea un programa en esta campaña,
+      el texto de esta área se copiará como una descripción en la página del programa
     title: Título
+    use_start_end_dates: Usar fechas de inicio y fin
+  chat:
+    label: Chat
   courses:
     activity: Actividad
+    active_courses: '%{course_type} activos'
     all_courses: Todos los cursos
     already_enrolled: Ya eres parte de «%{title}».
     already_exists: ¡Eso ya existe para este curso!
@@ -265,7 +276,9 @@ es:
       esta encuesta?
     duration: Duración del curso
     edit_course_dates: Editar las fechas del curso
+    enable_chat: Activar el chat
     end: Fin
+    ended: El curso ha terminado.
     enroll: Inscribirse
     enrollment: Inscripción
     error:
@@ -286,6 +299,10 @@ es:
     join_course: Únete al curso
     join_prompt: ¿Unirse a '%{title}'?
     join_successful: Te has unido con éxito a %{title}.
+    join_failed: Falló la inscripción.
+    join_failure_details:
+      cannot_join_twice: Los usuarios no pueden ingresar dos veces al mismo curso.
+      not_yet_approved: Este curso no ha sido aprobado para la inscripción.
     leave_confirmation: ¿Estás seguro de que quieres dejar este curso?
     leave_course: Deja el curso
     loading: Cargando…
@@ -300,7 +317,7 @@ es:
       discusión de todos los estudiantes que no hayan completado los módulos de capacitación
       asignados. ¿Estás seguro de que quieres hacer esto?
     no_available_actions: No hay acciones disponibles
-    overview: Resumen
+    overview: Inicio
     passcode: Código de acceso
     passcode_none: Ningún código de acceso
     passcode_prompt: 'Escribe el código de acceso para unirte:'
@@ -480,7 +497,9 @@ es:
     diff: dif
     diff_show: Mostrar
     diff_hide: Ocultar
+    edit_time_span: Las oediciones ocurrieron desde %{first_time} hasta %{last_time}
     edited_by: Editado por
+    edited_on: Editado el %{edit_date}
     loading: Cargando revisiones...
     none: Este curso no tiene ediciones recientes.
     time_doc: El tiempo de cada revisión en tu hora local
@@ -577,9 +596,10 @@ es:
     contributions: Contribuciones del usuario
     contributions_history_full: Ver el historial completo de contribuciones a Wikipedia
     contributions_more: Ver más contribuciones
+    contribution_statistics: Estadísticas de contribuciones
     course_passcode: 'Código de acceso:'
     editors: Editores estudiantiles
-    enroll_confirmation: ¿Estás seguro que deseas añadir a %{username}?
+    enroll_confirmation: ¿Confirmas que quieres añadir a %{username}?
     enroll_url: 'Los usuarios pueden unirse visitando este URL:'
     enrolled_success: ¡%{username} añadido con éxito!
     first_name: Nombre
@@ -628,6 +648,14 @@ es:
       campus_volunteer: Voluntario de campus
       online_volunteer: Voluntario en línea
       wiki_ed_staff: Personal de Wiki Ed
+  user_profiles:
+    student_impact: Impacto total de %{username} como estudiante
+    instructor_impact: Impacto total de %{username} como instructor
+    instructors_student_impact: Impacto total de los estudiantes de %{username}
+    disclaimer: La información que proporciones estará disponible públicamente.
+    bio_placeholder: Añade tu biografía (opcional)
+    location_placeholder: Añade tu ubicación (opcional)
+    institution_placeholder: Nombre de la institución (opcional)
   wiki_edits:
     notify_overdue:
       confirm: Esto publicará un recordatorio en las páginas de discusión de todos
@@ -668,8 +696,10 @@ es:
   error:
     form_errors: Verifica que el formulario no tenga errores.
     invalid_assignment: Asignación no válida
+    invalid_date: La fecha de %{key} no es válida
     invalid_file_format: El archivo no se pudo guardar. Sube un documento PDF o Word.
     oauth_invalid: Tu sesión de Wikipedia ha caducado. Inicia sesión de nuevo.
+    start_date_before_end_date: La fecha inicial debe ser anterior a la fecha final.
     unsupported_browser:
       header: Navegador no soportado. :-(
       explanation: Está utilizando un navegador que no es compatible con el panel
@@ -729,4 +759,6 @@ es:
       message: Este es un recordatorio acerca de la encuesta para tu curso, %{course_title}.
         Cualquier comentario recibido a través de esta encuesta nos ayuda a mejorar
         nuestro apoyo a tareas en la Wikipedia, como las tuyas.
+  feedback_form_responses:
+    no_responses: Todavía no hay respuestas/comentarios.
 ...

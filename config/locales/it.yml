@@ -7,6 +7,8 @@
 # Author: Einreiher
 # Author: Macofe
 # Author: Matteocng
+# Author: Nemo bis
+# Author: NumaPompilius3
 # Author: Statix64
 # Author: Wikitoni
 ---
@@ -21,6 +23,7 @@ it:
     explore: Esplora
     field_required: Questo campo è obbligatorio
     field_invalid_characters: Questo campo contiene caratteri non validi
+    field_invalid_date: Questo campo richiede una data nel formato YYYY-MM-DD
     greeting2: Benvenuto/a!
     greeting_extended: Benvenuto su Wikipedia
     greeting: Ciao!
@@ -65,7 +68,7 @@ it:
     assigned_to: Assegnato a
     character_doc: La somma dei caratteri aggiunti alle voci dagli editori iscritti
       tra le date di inizio e fine
-    edited: Articoli modificati
+    edited: Voci modificate
     edited_by: 'Modificato da:'
     edited_mobile: Voci
     hide: Nascondi
@@ -89,12 +92,15 @@ it:
       list: Elenco di classe — un elenco piuttosto che una voce tradizionale
       '?': Non classificato — una voce che non è stata ancora valutata sulla scala
         di qualità di Wikipedia
+      does_not_exist: Questa voce non esiste su Wikipedia
     title: Titolo
     title_example: Titolo della voce
     view: Visualizza voce
     view_all: Mostra tutto
     view_doc: La somma di tutte le visite ad ogni voce durante il progetto
+    view_on_wiki: Vedi su wiki
     views_added: Aggiunte %{count} nuove viste per %{title}
+    edit_size: Modifica dimensione
     wp10: Completezza strutturale
     wp10_doc: Il punteggio di "Completezza strutturale" rappresenta quanto strettamente
       una voce si avvicina al modello di una voce di Wikipedia matura, basato sul
@@ -128,8 +134,13 @@ it:
     campaigns: Campagne
     campaign_updated: Campagna aggiornata
     create_campaign: Crea una nuova campagna
+    create_my_campaign: Crea la mia campagna!
     description: Descrizione
+    delete_campaign: Cancella questa campagna
     none: Nessuno
+    title: Titolo
+  chat:
+    label: Chat
   courses:
     activity: Attività
     active_courses: '%{course_type} attivo/a'
@@ -211,7 +222,9 @@ it:
       sondaggio?
     duration: Durata del corso
     edit_course_dates: Modifica date del corso
+    enable_chat: Attiva chat
     end: Fine
+    ended: Il corso si è concluso.
     enroll: Iscriversi
     enrollment: Iscrizione
     error:
@@ -238,7 +251,7 @@ it:
       di tutti gli studenti che sono in ritardo nel completare i moduli di formazione
       assegnati?
     no_available_actions: Nessuna azione disponibile
-    overview: Panoramica
+    overview: Pagina principale
     passcode: Codice di accesso
     published: 'Il tuo corso è stato pubblicato! Gli studenti possono iscriversi al
       corso, visitando il seguente URL:'
@@ -348,7 +361,7 @@ it:
   metrics:
     activity: Attività recente
     articles_created: Voci create
-    articles_edited: Articoli modificati
+    articles_edited: Voci modificate
     characters: Caratteri
     char_added: Caratteri aggiunti
     char_changed: Caratteri Modificati
@@ -364,7 +377,7 @@ it:
     upload_usages_count:
       one: utilizzo totale nelle varie lingue
       other: utilizzi totali nelle varie lingue
-    view_count_description: Visite alla voce
+    view_count_description: Visite alle voci
     view: Visualizzazioni
     word_count: Parole aggiunte
     word_count_average: Conteggio medio parole
@@ -395,7 +408,9 @@ it:
     diff: confronto tra versioni
     diff_show: Mostra
     diff_hide: Nascondi
+    edit_time_span: Modifiche avvenute dal %{first_time} al %{last_time}
     edited_by: Modificato da
+    edited_on: Modificata il %{edit_date}
     loading: Caricamento revisioni...
     none: Questo corso non ha attività di modifica recenti.
     title: Titolo
@@ -456,7 +471,7 @@ it:
     contributions: Contributi dell'utente
     contributions_history_full: Vedi la cronologia completa dei contributi su Wikipedia
     contributions_more: Visualizza Ulteriori Contributi
-    editors: Editori
+    editors: Contributori
     enroll_confirmation: Sei sicuro di voler aggiungere %{username}?
     enroll_url: 'Gli utenti possono partecipare visitando questo URL:'
     enrolled_success: '%{username} è stato aggiunto con successo!'
@@ -502,6 +517,9 @@ it:
       campus_volunteer: Volontario del campus
       online_volunteer: Volontario online
       wiki_ed_staff: Staff Wiki Ed
+  user_profiles:
+    location_placeholder: Aggiungi la tua posizione (opzionale)
+    institution_placeholder: Nome dell'istituto (opzionale)
   wizard:
     assignment_dates: Date di assegnazione
     assignment_type: Tipo di assegnazione

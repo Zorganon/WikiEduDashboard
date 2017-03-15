@@ -15,6 +15,7 @@
 #  message        :text(65535)
 #  target_user_id :integer
 #  subject_id     :integer
+#  resolved       :boolean          default(FALSE)
 #
 
 class Alert < ActiveRecord::Base
@@ -38,6 +39,11 @@ class Alert < ActiveRecord::Base
     UntrainedStudentsAlert
   ).freeze
   validates_inclusion_of :type, in: ALERT_TYPES
+
+  RESOLVABLE_ALERT_TYPES = %w(
+    ArticlesForDeletionAlert
+    ContinuedCourseActivityAlert
+  ).freeze
 
   def course_url
     "https://#{ENV['dashboard_url']}/courses/#{course.slug}"
@@ -72,10 +78,16 @@ class Alert < ActiveRecord::Base
   end
 
   # Disable emails for specific alert types in application.yml, like so:
-  #   ProductCourseAlert_email_disabled: 'true'
+  #   ProductiveCourseAlert_email_disabled: 'true'
   def emails_disabled?
     ENV["#{self.class}_emails_disabled"] == 'true'
   end
+
+  # This can be used to copy dashboard emails to Salesforce
+  def bcc_to_salesforce_email
+    ENV['bcc_to_salesforce_email']
+  end
+
   #########################
   # Type-specific methods #
   #########################
@@ -90,5 +102,9 @@ class Alert < ActiveRecord::Base
 
   def reply_to
     nil
+  end
+
+  def resolvable?
+    false
   end
 end

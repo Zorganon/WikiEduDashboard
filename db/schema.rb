@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161215213721) do
+ActiveRecord::Schema.define(version: 20170304003631) do
 
   create_table "alerts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "course_id"
@@ -19,11 +19,12 @@ ActiveRecord::Schema.define(version: 20161215213721) do
     t.integer  "revision_id"
     t.string   "type"
     t.datetime "email_sent_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.text     "message",        limit: 65535
     t.integer  "target_user_id"
     t.integer  "subject_id"
+    t.boolean  "resolved",                     default: false
     t.index ["article_id"], name: "index_alerts_on_article_id", using: :btree
     t.index ["course_id"], name: "index_alerts_on_course_id", using: :btree
     t.index ["revision_id"], name: "index_alerts_on_revision_id", using: :btree
@@ -122,7 +123,7 @@ ActiveRecord::Schema.define(version: 20161215213721) do
 
   create_table "commons_uploads", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
-    t.string   "file_name"
+    t.string   "file_name",   limit: 2000
     t.datetime "uploaded_at"
     t.integer  "usage_count"
     t.datetime "created_at"
@@ -171,6 +172,8 @@ ActiveRecord::Schema.define(version: 20161215213721) do
     t.integer  "home_wiki_id"
     t.integer  "recent_revision_count",               default: 0
     t.boolean  "needs_update",                        default: false
+    t.string   "chatroom_id"
+    t.text     "flags",                 limit: 65535
     t.index ["slug"], name: "index_courses_on_slug", using: :btree
   end
 
@@ -352,6 +355,17 @@ ActiveRecord::Schema.define(version: 20161215213721) do
     t.datetime "completed_at"
   end
 
+  create_table "user_profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "bio"
+    t.integer  "user_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "location"
+    t.string   "institution"
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "username"
     t.datetime "created_at"
@@ -369,6 +383,8 @@ ActiveRecord::Schema.define(version: 20161215213721) do
     t.boolean  "greeted",             default: false
     t.boolean  "greeter",             default: false
     t.string   "locale"
+    t.string   "chat_password"
+    t.string   "chat_id"
   end
 
   create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -3,8 +3,7 @@ import Expandable from '../high_order/expandable.jsx';
 import ArticleDetailsStore from '../../stores/article_details_store.js';
 import DiffViewer from '../revisions/diff_viewer.jsx';
 import ArticleViewer from '../common/article_viewer.jsx';
-
-import Wp10Graph from './wp10_graph.jsx';
+import ArticleGraphs from './article_graphs.jsx';
 
 const getArticleDetails = () => ArticleDetailsStore.getArticleDetails();
 
@@ -13,7 +12,9 @@ const ArticleDrawer = React.createClass({
 
   propTypes: {
     article: React.PropTypes.object,
-    is_open: React.PropTypes.bool
+    is_open: React.PropTypes.bool,
+    current_user: React.PropTypes.object,
+    course: React.PropTypes.object
   },
 
   mixins: [ArticleDetailsStore.mixin],
@@ -42,12 +43,17 @@ const ArticleDrawer = React.createClass({
 
     let diffViewer;
     if (this.state.articleDetails.first_revision) {
+      const showSalesforceButton = Boolean(Features.wikiEd && this.props.current_user.admin);
       diffViewer = (
         <DiffViewer
           revision={this.state.articleDetails.last_revision}
           first_revision={this.state.articleDetails.first_revision}
           showButtonLabel={I18n.t('articles.show_cumulative_changes')}
           largeButton={true}
+          editors={this.state.articleDetails.editors}
+          showSalesforceButton={showSalesforceButton}
+          course={this.props.course}
+          article={this.props.article}
         />
       );
     } else {
@@ -75,7 +81,7 @@ const ArticleDrawer = React.createClass({
                   {articleViewer}
                 </td>
                 <td colSpan="2">
-                  <Wp10Graph article={this.props.article} />
+                  <ArticleGraphs article={this.props.article} />
                 </td>
               </tr>
               <tr>

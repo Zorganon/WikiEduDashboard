@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.3.1'
-gem 'rails', '5.0.0.1'
+gem 'rails', '5.0.1'
 gem 'jbuilder', '~> 2.0'
 gem 'haml-rails'
 
@@ -55,6 +55,8 @@ gem "paperclip"
 
 # TZ information is not available on Windows, needs to be installed separately
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+
+gem 'restforce', git: 'https://github.com/ejholmes/restforce.git'
 
 # If you want to be able to hack locally on rapidfire,
 # run `export RAPIDFIREHACKINGMODE=true` in your terminal.
@@ -113,4 +115,3 @@ group :production do
   gem 'uglifier'
   gem 'rails_12factor'
 end
-

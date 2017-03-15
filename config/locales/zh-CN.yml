@@ -30,7 +30,7 @@ zh-CN:
     recent_activity: 最近活动
     search: 提问问题
     sign_up_extended: 注册维基百科
-    sign_up_log_in_extended: 与维基百科
+    sign_up_log_in_extended: 通过维基百科
     sign_up: 注册
     submit: 提交
     training: 培训
@@ -42,7 +42,7 @@ zh-CN:
     create_preparation_note: 在开始之前，请确保您手上有您的校历；作业设计工具将使用您班级的会议日期——包含任何学校休息日和节假日——以使您的时间表适应您选择的日期范围。记住，您总是可以编辑时间表以与您的需求相符。
     explore_course_pages: 浏览课程页面
     explore_examples: 浏览示例
-    join_note: 一旦您从您的导师接收到一段密码，点击查找您的课程以寻找并加入。
+    join_note: 一旦您从您的导师处收到密码，就可点击找到您的课程来查找并加入它。
     no_courses_instructor: 看起来您没有任何课程。
     no_courses_student: 看起来您还没有加入一个课程。
     opt_out: 请求不参加迎新活动
@@ -95,6 +95,7 @@ zh-CN:
     view_doc: 在项目期间每个条目的访问量总数
     view_on_wiki: 在wiki上查看
     views_added: 已为%{title}添加%{count}次新查看
+    edit_size: 编辑大小
     wp10: 结构完整性
     wp10_doc: “结构完整性”分数represents how closely an article fits the mold of a mature
       Wikipedia article, based on the machine learning-based Objective Revision Evaluation
@@ -153,6 +154,8 @@ zh-CN:
     program_template_tooltip: 当组织者在此运动中创建程序时，此区域的文本将被复制为程序页面上的描述
     title: 标题
     use_start_end_dates: 使用开始和结束日期
+  chat:
+    label: 聊天
   courses:
     activity: 活动
     active_courses: 激活%{course_type}
@@ -217,15 +220,19 @@ zh-CN:
       start_date: 开始日期
       start_date_placeholder: 开始日期（YYYY-MM-DD）
       subject: 主题
+      update_scheduled: 已安排更新。数据将连同所有当前程序一起，在下次更新周期时进行更新。这通常需要数小时。
     current: 当前课程
     delete_course: 删除课程
     dismiss_survey: 关闭
     dismiss_survey_confirm: 您确定要永久关闭此调查么？
     duration: 课程持续时间
     edit_course_dates: 编辑课程日期
+    enable_chat: 启用聊天
     end: 结束
+    ended: 课程已启用。
     enroll: 注册
     enrollment: 登记
+    courses_enrolled: 课程已登记
     error:
       exists: 该课程已存在！请使用不同的标题、学校或学期再试。
       user_exists: 对不起，%{username}不是一位存在的用户。
@@ -243,6 +250,10 @@ zh-CN:
     join_course: 加入课程
     join_prompt: 加入“%{title}”么？
     join_successful: 您已成功加入%{title}。
+    join_failed: 登记失败。
+    join_failure_details:
+      cannot_join_twice: 用户不可以2次加入同一课程。
+      not_yet_approved: 此课程尚未批准登记。
     join_details: 要加入该程序，您需要获取密码——或包含密码的登记链接——来自导师。如果您尚未接收到密码，请联络您的导师。
     leave_confirmation: 您确定要离开这个课程么？
     leave_course: 离开课程
@@ -256,7 +267,7 @@ zh-CN:
     none: 无
     notify_untrained_confirmation: 这将在讨论页为所有未能完成分配训练模块的学生发布一则提示。您确定要这样做么？
     no_available_actions: 无可用操作
-    overview: 概述
+    overview: 首页
     passcode: 密码
     passcode_none: 无密码
     passcode_prompt: 输入密码以加入：
@@ -334,6 +345,7 @@ zh-CN:
     explore: 找到程序
     enroll: 添加编辑者
     enrollment: 参与
+    courses_enrolled: 程序已参与
     expected_students: 预期编辑者
     instructors: 促进者
     join_course: 加入程序
@@ -419,7 +431,9 @@ zh-CN:
     diff: 差异
     diff_show: 显示
     diff_hide: 隐藏
+    edit_time_span: 从%{first_time}到%{last_time}期间发生的编辑
     edited_by: 编辑者
+    edited_on: 于%{edit_date}时的编辑
     loading: 正在加载修订……
     none: 此课程没有最近编辑活动。
     time_doc: 在您本地时间内，每个修订的时间
@@ -544,8 +558,6 @@ zh-CN:
     up_to_date_with_training: 最近培训
     username: 用户名
     username_placeholder: 用户名
-    user_impact: 由%{username}做出的总影响
-    student_impact: 由%{username}的学生做出的总影响
     role:
       visitor: 访问者
       student: 学生
@@ -553,6 +565,14 @@ zh-CN:
       campus_volunteer: 校园志愿者
       online_volunteer: 在线志愿者
       wiki_ed_staff: Wiki Ed职员
+  user_profiles:
+    student_impact: 由%{username}作为学生做出的总影响
+    instructor_impact: 由%{username}作为导师做出的总影响
+    instructors_student_impact: 由%{username}的学生做出的总影响
+    disclaimer: 您提供的信息将公开可用。
+    bio_placeholder: 添加您的个人简历（可选）
+    location_placeholder: 添加您的位置（可选）
+    institution_placeholder: 机构名称（可选）
   wiki_edits:
     notify_overdue:
       confirm: 这将在讨论页为所有有逾期培训的学生发布一则提示。您确定要这样做么？
@@ -619,4 +639,6 @@ zh-CN:
       link: 接受调查
     follow_up:
       message: 这是有关对您的课程（%{course_title}）调查的提示。来自该调查的反馈会帮助我们改进我们对像您一样的维基百科作业的支持。
+  feedback_form_responses:
+    no_responses: 目前没有反馈响应。
 ...

@@ -83,6 +83,22 @@ const API = {
     });
   },
 
+  fetchStatsData(username){
+    return new Promise((res, rej) =>
+      $.ajax({
+        type: 'GET',
+        url: `/user_stats.json?username=${ username }`,
+        success(data) {
+          return res(data);
+        }
+      })
+      .fail((obj) => {
+        logErrorMessage(obj);
+        return rej(obj);
+      })
+    );
+  },
+
   fetchArticleDetails(articleId, courseId) {
     return new Promise((res, rej) => {
       const url = `/articles/details.json?article_id=${articleId}&course_id=${courseId}`;
@@ -130,6 +146,23 @@ const API = {
         return rej(obj);
       })
     );
+  },
+
+  fetchProfileStatsData(opts) {
+      return new Promise((res, rej) =>
+        $.ajax({
+          type: 'GET',
+          url: `/users/stats_data.json?username=${opts}`,
+          success(data) {
+            console.log('Received profile stats data');
+            return res(data);
+          }
+        })
+        .fail((obj) => {
+          logErrorMessage(obj);
+          return rej(obj);
+        })
+      );
   },
 
   fetchRecentEdits(opts = {}) {
@@ -505,13 +538,12 @@ slide_id=${opts.slide_id}`,
         type: 'GET',
         url: `/courses/${courseId}/needs_update.json`,
         success(data) {
-          alert(data.result);
           return res(data);
         }
       })
       .fail((obj) => {
         console.error('Couldn\'t request update');
-        return rej(obj);
+        rej(obj);
       })
     );
   },
@@ -636,6 +668,54 @@ slide_id=${opts.slide_id}`,
         type: 'POST',
         url: '/alerts',
         data: opts,
+        success(data) {
+          return res(data);
+        }
+      })
+      .fail((obj) => {
+        logErrorMessage(obj);
+        return rej(obj);
+      })
+    );
+  },
+
+  chatLogin() {
+    return new Promise((res, rej) =>
+      $.ajax({
+        type: 'GET',
+        url: '/chat/login.json',
+        success(data) {
+          return res(data);
+        }
+      })
+      .fail((obj) => {
+        logErrorMessage(obj);
+        return rej(obj);
+      })
+    );
+  },
+
+  enableChat(courseId) {
+    return new Promise((res, rej) =>
+      $.ajax({
+        type: 'PUT',
+        url: `/chat/enable_for_course/${courseId}.json`,
+        success(data) {
+          return res(data);
+        }
+      })
+      .fail((obj) => {
+        logErrorMessage(obj);
+        return rej(obj);
+      })
+    );
+  },
+
+  linkToSalesforce(courseId, salesforceId) {
+    return new Promise((res, rej) =>
+      $.ajax({
+        type: 'PUT',
+        url: `/salesforce/link/${courseId}.json?salesforce_id=${salesforceId}`,
         success(data) {
           return res(data);
         }

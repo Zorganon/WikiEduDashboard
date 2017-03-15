@@ -17,6 +17,7 @@ describe UsersController do
       allow_any_instance_of(WikiCourseEdits).to receive(:update_assignments)
       allow(controller).to receive(:current_user).and_return(user)
       course.campaigns << Campaign.first
+      stub_add_user_to_channel_success
     end
 
     subject { response.status }
@@ -81,6 +82,7 @@ describe UsersController do
       before do
         allow(controller).to receive(:current_user).and_return(admin)
         stub_oauth_edit
+
       end
 
       let(:post_params) do
@@ -163,113 +165,46 @@ describe UsersController do
     end
   end
 
-  describe '#show' do
+  describe '#index' do
     render_views
 
-    context 'when user not found' do
-      it 'redirects to the home page' do
-        get :show, params: { username: 'non existing user' }
-        expect(response.body).to redirect_to(root_path)
-      end
-    end
-
-    context 'when the user is enrolled in a course' do
-      let(:course) { create(:course) }
+    context 'when user is NOT admin' do
       let(:user) { create(:user) }
-      let!(:courses_user) do
-        create(:courses_user, course_id: course.id,
-                              user_id: user.id)
-      end
-      it 'lists the course' do
-        get :show, params: { username: user.username }
-        expect(response.body).to have_content course.title
+
+      before { allow(controller).to receive(:current_user).and_return(user) }
+
+      it 'should not authorize' do
+        get :index
+        expect(response.body).to have_content('You are not authorized')
       end
     end
 
-    context 'when current_user is same user' do
-      let(:user) { create(:user, email: 'fake_email@gmail.com') }
-      it 'shows the email id' do
-        allow(controller).to receive(:current_user).and_return(user)
-        get :show, params: { username: user.username }
-        expect(response.body).to have_content user.email
-      end
-    end
+    context 'when user IS admin' do
+      let(:admin) { create(:admin, email: 'admin@email.com') }
 
-    context 'when current_user is admin' do
-      let(:user) { create(:user, email: 'fake_email@gmail.com') }
-      let(:admin) { create(:admin) }
-      it 'shows the email id' do
+      before do
         allow(controller).to receive(:current_user).and_return(admin)
-        get :show, params: { username: user.username }
-        expect(response.body).to have_content user.email
       end
-    end
 
-    context 'when current_user is not the same user nor an admin' do
-      let(:user) { create(:user, email: 'fake_email@gmail.com') }
-      let(:unauthorised_user) { create(:user) }
-      it 'does not shows the email id' do
-        allow(controller).to receive(:current_user).and_return(unauthorised_user)
-        get :show, params: { username: user.username }
-        expect(response.body).not_to have_content user.email
-      end
-    end
+      let!(:instructor) { create(:user, email: 'instructor@school.edu',
+                                real_name: 'Sare Goss', username: 'saregoss',
+                                permissions: User::Permissions::INSTRUCTOR) }
 
-    context 'when user is an instructor' do
-      let(:course) { create(:course) }
-      let(:user) { create(:user) }
-      let!(:courses_user) do
-        create(:courses_user, course_id: course.id,
-                              user_id: user.id,
-                              role: CoursesUsers::Roles::INSTRUCTOR_ROLE)
-      end
-      it 'displays the profile navbar' do
-        get :show, params: { username: user.username }
-        expect(response).to render_template(partial: '_profile_nav')
-      end
-      it 'displays instructor cumulative statistics' do
-        get :show, params: { username: user.username }
-        expect(response).to render_template(partial: '_instructor_cumulative_stats')
-      end
-    end
+      it 'should list instructors by default' do
+        get :index
 
-    context 'when user is a student' do
-      let(:course) { create(:course) }
-      let(:user) { create(:user) }
-      let!(:courses_user) do
-        create(:courses_user, course_id: course.id,
-                              user_id: user.id,
-                              role: CoursesUsers::Roles::STUDENT_ROLE)
-      end
-      it 'displays the profile navbar' do
-        get :show, params: { username: user.username }
-        expect(response).to render_template(partial: '_profile_nav')
-      end
-      it 'displays student cumulative statistics' do
-        get :show, params: { username: user.username }
-        expect(response).to render_template(partial: '_student_cumulative_stats')
-      end
-    end
+        expect(response.body).to have_content instructor.username
+        expect(response.body).to have_content instructor.real_name
+        expect(response.body).to have_content instructor.email
 
-    context 'when user is neither a student nor an instructor' do
-      let(:course) { create(:course) }
-      let(:user) { create(:user) }
-      let!(:courses_user) do
-        create(:courses_user, course_id: course.id,
-                              user_id: user.id,
-                              role: CoursesUsers::Roles::ONLINE_VOLUNTEER_ROLE)
+        expect(response.body).to_not have_content admin.email
       end
-      it 'does not display the profile navbar' do
-        get :show, params: { username: user.username }
-        expect(response).not_to render_template(partial: '_profile_nav')
-      end
-      it 'does not display student cumulative statistics' do
-        get :show, params: { username: user.username }
-        expect(response).not_to render_template(partial: '_student_cumulative_stats')
-      end
-      it 'does not display instructor cumulative statistics' do
-        get :show, params: { username: user.username }
-        expect(response).not_to render_template(partial: '_instructor_cumulative_stats')
+
+      let(:search_user) { create(:user, email: 'findme@example.com') }
+
+      it 'should accept email param and return associated user' do
+        get :index, params: { email: search_user.email }
+        expect(response.body).to have_content search_user.email
       end
     end
   end

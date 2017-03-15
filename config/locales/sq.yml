@@ -38,6 +38,11 @@ sq:
     confirm: Në rregull
   dashboard:
     create_note: Shtyp në Krijo Kurs për të krijuar kursin tuaj të parë.
+    create_preparation_note: Sigurohu që të keni kalendarin tuaj afër para se të filloni;
+      mjeti i projektimit të detyrave do të përdorë datat e takimit të klasës tuaj
+      — duke përfshirë çdo pushim dhe festë — të përshtat afatin tuaj kohor në datat
+      që ju zgjidhni. Mos harroni se ju gjithmonë mund të redaktoni afatet për të
+      përshtatur nevojat tuaja.
     explore_course_pages: Eksploroni faqet e kursit
     explore_examples: Eksploroni Shembujt
     join_note: Pasi të keni marrë një kod kalimi nga instruktori juaj, klikoni mbi
@@ -260,6 +265,7 @@ sq:
     join_course: Bëhu pjesë e lëndës
     join_prompt: Bashkohu '%{title}'?
     join_successful: Jeni bërë pjesë e lëndës %{title}.
+    join_failed: Regjistrimi dështoi.
     join_details: Për t'u bashkuar me këtë lëndë, ju duhet të merrni një kod -- apo
       një lidhje regjistrimi që përfshinë kodin e hyrjes — nga instruktori. Nëse nuk
       e keni marrë këtë, kontaktoni instruktorin tuaj.
@@ -292,7 +298,7 @@ sq:
     students_short: Studentët
     submitted_admin: Kjo lëndë është dorëzuar për miratim nga krijuesi i saj. Për
       ta miratuar atë, shtoni atë në një fushatë në faqen Vështrim.
-    submitted_and_pending_heading: Të Paraqitura dhe në Pritje të Miratimit
+    submitted_and_pending_heading: Miratimet e Dorëzuara dhe në Pritje
     submitted_heading: Lëndët e Dorëzuara
     submitted_note: Kursi juaj është dorëzuar. Stafi i Wiki Ed do të shqyrtojë atë
       dhe do t'ju kontaktoj me ndonjë pyetje.
@@ -366,7 +372,7 @@ sq:
     join_course: Bashkoju programit
     join_details: Për t'u bashkuar me këtë program, ju duhet të merrni kodin e hyrjes
       — ose lidhje që përfshinë kodin e hyrjes — nga lehtësuesi.
-    leave_course: Lërë programit
+    leave_course: Lëre programin
     milestones_none: Kjo projekt aktualisht nuk ka ndonjë cak.
     published: 'Ky projekt është botuar! Redaktorët mund të regjistrohen duke vizituar
       URL-në e mëposhtme:'
@@ -413,7 +419,7 @@ sq:
     upload_usages_count:
       one: përdorimi i përgjithshëm nëpër gjuhë
       other: gjithsej përdorime nëpër gjuhë
-    view_count_description: Leximet e Artikullit
+    view_count_description: Lexime të artikujve
     view: Shikime
     word_count: Fjalët e Shtuara
     word_count_average: Numri Mesatar i Fjalëve
@@ -430,6 +436,8 @@ sq:
     image: Imazhe
     file_name: Emri i Skedarit
     no_edits: Nuk ka redaktime së fundi.
+    plagiarism_report: Raport i Plagjiaturave
+    possible_plagiarism: Mund të jetë Plagjiaturë
     recent_edits: Redaktimet së fundi
     recent_uploads: Ngarkimet e Fundit
     revision_author: Autori i Ndryshimeve
@@ -586,8 +594,6 @@ sq:
     up_to_date_with_training: trajnimi i përfunduar
     username: Përdoruesi
     username_placeholder: Përdoruesi
-    user_impact: Ndikimi i përgjithshëm i bërë nga %{username}
-    student_impact: Ndikimi i përgjithshëm i bërë nga studentët e %{username}
     role:
       visitor: Vizitor
       student: Nxënës
@@ -595,6 +601,13 @@ sq:
       campus_volunteer: Vullnetar i shkollës
       online_volunteer: Vullnetar Online
       wiki_ed_staff: Stafi Wiki Ed
+  user_profiles:
+    student_impact: Ndikimi i përgjithshëm i bërë nga studentët e %{username}
+  wiki_edits:
+    notify_overdue:
+      confirm: Kjo do të postoj një përkujtues në faqen e diskutimit të të gjithë
+        studentëve të cilët janë vonuar në trajnim. A jeni i sigurt se dëshironi të
+        bëni këtë?
   wizard:
     assignment_description: Zgjidhni datën e fillimit dhe fundit për kohën e zhvillimit
       të detyrës. Për shembull, nëse doni të filloni projektin tuaj në Wikipedia javën

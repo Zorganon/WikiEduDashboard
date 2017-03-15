@@ -6,6 +6,7 @@ import CourseActions from '../actions/course_actions.js';
 import CourseStore from '../stores/course_store.js';
 import UserStore from '../stores/user_store.js';
 import NotificationStore from '../stores/notification_store.js';
+import WeekStore from '../stores/week_store.js';
 import Affix from './common/affix.jsx';
 import CourseUtils from '../utils/course_utils.js';
 import GetHelpButton from '../components/common/get_help_button.jsx';
@@ -16,7 +17,8 @@ const getState = function () {
   const cu = UserStore.getFiltered({ id: current.id })[0];
   return {
     course: CourseStore.getCourse(),
-    current_user: cu || current
+    current_user: cu || current,
+    weeks: WeekStore.getWeeks()
   };
 };
 
@@ -29,7 +31,7 @@ const Course = React.createClass({
     children: React.PropTypes.node
   },
 
-  mixins: [CourseStore.mixin, UserStore.mixin, NotificationStore.mixin],
+  mixins: [CourseStore.mixin, UserStore.mixin, NotificationStore.mixin, WeekStore.mixin],
 
   getInitialState() {
     return getState();
@@ -44,9 +46,6 @@ const Course = React.createClass({
   getCourseID() {
     const { params } = this.props;
     return `${params.course_school}/${params.course_title}`;
-  },
-  getCurrentUser() {
-    return this.state.current_user;
   },
 
   storeDidChange() {
@@ -85,8 +84,8 @@ const Course = React.createClass({
     }
 
     let userObject;
-    if (this.getCurrentUser().id) {
-      userObject = UserStore.getFiltered({ id: this.getCurrentUser().id })[0];
+    if (this.state.current_user.id) {
+      userObject = UserStore.getFiltered({ id: this.state.current_user.id })[0];
     }
     const userRole = userObject ? userObject.role : -1;
 
@@ -110,7 +109,7 @@ const Course = React.createClass({
     if (Features.enableGetHelpButton) {
       getHelp = (
         <div className="nav__button" id="get-help-button">
-          <GetHelpButton course={this.state.course} current_user={this.getCurrentUser()} key="get_help" />
+          <GetHelpButton course={this.state.course} current_user={this.state.current_user} key="get_help" />
         </div>
       );
     }
@@ -118,45 +117,72 @@ const Course = React.createClass({
     // //////////////////////////////////
     // Admin / Instructor notifications /
     // //////////////////////////////////
-    if ((userRole > 0 || this.getCurrentUser().admin) && !this.state.course.legacy && !this.state.course.published) {
+
+    // For unpublished courses, when viewed by an instructor or admin
+    if ((userRole > 0 || this.state.current_user.admin) && !this.state.course.legacy && !this.state.course.published) {
+      // If it's an unsubmitted ClassroomProgramCourse
       if (CourseStore.isLoaded() && !(this.state.course.submitted || this.state.published) && this.state.course.type === 'ClassroomProgramCourse') {
-        alerts.push((
-          <div className="notification" key="submit">
-            <div className="container">
-              <p>{I18n.t('courses.review_timeline')}</p>
-              <a href="#" onClick={this.submit} className="button">{I18n.t('application.submit')}</a>
+        // Show submit button if there is a timeline with trainings, or user is admin.
+        if (CourseUtils.hasTrainings(this.state.weeks) || this.state.current_user.admin) {
+          alerts.push((
+            <div className="notification" key="submit">
+              <div className="container">
+                <p>{I18n.t('courses.review_timeline')}</p>
+                <a href="#" onClick={this.submit} className="button">{I18n.t('application.submit')}</a>
+              </div>
             </div>
-          </div>
-        )
-        );
+          ));
+        // Show 'add trainings' message if there is a timeline with no trainings
+        } else if (this.state.weeks.length) {
+          alerts.push((
+            <div className="notification" key="submit">
+              <div className="container">
+                <p>Please add student trainings to your assignment timeline. Assigning training modules is an essential part of Wiki Ed's best practices.</p>
+                <a href={`${this._courseLinkParams()}/timeline`} className="button">Go to Timeline</a>
+              </div>
+            </div>
+          ));
+        // Show 'create a timeline' message if there is no timeline.
+        } else {
+          alerts.push((
+            <div className="notification" key="submit">
+              <div className="container">
+                <p>Please create a timeline for your course. You can build one from scratch from the Timeline tab, or use the Assignment Wizard to create a custom timeline based on Wiki Ed's best practices.</p>
+                <a href={`${this._courseLinkParams()}/timeline`} className="button">Launch the Wizard</a>
+              </div>
+            </div>
+          ));
+        }
       }
 
+      // When the course has been submitted
       if (this.state.course.submitted) {
-        if (!this.getCurrentUser().admin) {
+        // Show instructors the 'submitted' notice.
+        if (!this.state.current_user.admin) {
           alerts.push((
             <div className="notification" key="submit">
               <div className="container">
                 <p>{I18n.t('courses.submitted_note')}</p>
               </div>
             </div>
-          )
-          );
+          ));
+        // Instruct admins to approve the course by adding a campaign.
         } else {
-          const overviewLink = `${this._courseLinkParams()}/overview`;
+          const homeLink = `${this._courseLinkParams()}/home`;
           alerts.push((
             <div className="notification" key="publish">
               <div className="container">
                 <p>{I18n.t('courses.submitted_admin')}</p>
-                <CourseLink to={overviewLink} className="button">{I18n.t('courses.overview')}</CourseLink>
+                <CourseLink to={homeLink} className="button">{I18n.t('courses.overview')}</CourseLink>
               </div>
             </div>
-          )
-          );
+          ));
         }
       }
     }
 
-    if ((userRole > 0 || this.getCurrentUser().admin) && this.state.course.published && UserStore.isLoaded() && UserStore.getFiltered({ role: 0 }).length === 0 && !this.state.course.legacy) {
+    // For published courses with no students, highlight the enroll link
+    if ((userRole > 0 || this.state.current_user.admin) && this.state.course.published && UserStore.isLoaded() && UserStore.getFiltered({ role: 0 }).length === 0 && !this.state.course.legacy) {
       const enrollEquals = '?enroll=';
       const url = window.location.origin + this._courseLinkParams() + enrollEquals + this.state.course.passcode;
       alerts.push((
@@ -216,7 +242,7 @@ const Course = React.createClass({
     if (this.props.location.query.enroll || this.props.location.query.enrolled) {
       enrollCard = (
         <EnrollCard
-          user={this.getCurrentUser()}
+          user={this.state.current_user}
           userRole={userRole}
           course={this.state.course}
           courseLink={this._courseLinkParams()}
@@ -227,13 +253,22 @@ const Course = React.createClass({
       );
     }
 
-    let overviewLinkClassName;
-    if (this._onCourseIndex()) { overviewLinkClassName = 'active'; }
-    const overviewLink = `${this._courseLinkParams()}/overview`;
+    let homeLinkClassName;
+    if (this._onCourseIndex()) { homeLinkClassName = 'active'; }
+    const homeLink = `${this._courseLinkParams()}/home`;
     const studentsLink = `${this._courseLinkParams()}/students`;
     const articlesLink = `${this._courseLinkParams()}/articles`;
     const uploadsLink = `${this._courseLinkParams()}/uploads`;
     const activityLink = `${this._courseLinkParams()}/activity`;
+    let chatNav;
+    if (this.state.course && this.state.course.flags && this.state.course.flags.enable_chat) {
+      const chatLink = `${this._courseLinkParams()}/chat`;
+      chatNav = (
+        <div className="nav__item" id="activity-link">
+          <p><Link to={chatLink} activeClassName="active">{I18n.t('chat.label')}</Link></p>
+        </div>
+      );
+    }
 
     return (
       <div>
@@ -243,7 +278,7 @@ const Course = React.createClass({
               {courseLink}
               <nav>
                 <div className="nav__item" id="overview-link">
-                  <p><Link to={overviewLink} className={overviewLinkClassName} activeClassName="active">{I18n.t('courses.overview')}</Link></p>
+                  <p><Link to={homeLink} className={homeLinkClassName} activeClassName="active">{I18n.t('courses.overview')}</Link></p>
                 </div>
                 {timeline}
                 <div className="nav__item" id="students-link">
@@ -258,6 +293,7 @@ const Course = React.createClass({
                 <div className="nav__item" id="activity-link">
                   <p><Link to={activityLink} activeClassName="active">{I18n.t('activity.label')}</Link></p>
                 </div>
+                {chatNav}
                 {getHelp}
               </nav>
             </div>
@@ -268,7 +304,7 @@ const Course = React.createClass({
         </div>
         <div className="course_main container">
           {enrollCard}
-          {React.cloneElement(this.props.children, { course_id: this.getCourseID(), current_user: this.getCurrentUser(), course: this.state.course })}
+          {React.cloneElement(this.props.children, { course_id: this.getCourseID(), current_user: this.state.current_user, course: this.state.course })}
         </div>
       </div>
     );

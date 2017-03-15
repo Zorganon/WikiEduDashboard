@@ -78,6 +78,8 @@ pl:
   campaign:
     none: Brak
     title: Tytuł
+  chat:
+    label: Czat
   courses:
     activity: Aktywność
     articles: Artykuły
@@ -97,6 +99,7 @@ pl:
     delete_course: Usuń kurs
     dismiss_survey: Odrzuć
     end: Koniec
+    ended: Kurs zakończony.
     enroll: Zapisz się
     enrollment: Rejestracja
     error:
@@ -155,6 +158,8 @@ pl:
     diff: różn.
     diff_show: Pokaż
     diff_hide: Ukryj
+    edit_time_span: Edycje od %{first_time} do %{last_time}
+    edited_on: Edytowano %{edit_date}
     loading: Wczytywanie wersji...
     title: Tytuł
   timeline:
@@ -203,6 +208,9 @@ pl:
     role:
       student: Student
       instructor: Instruktor
+  user_profiles:
+    location_placeholder: Dodaj swoją lokalizację (opcjonalnie)
+    institution_placeholder: Nazwa instytucji (opcjonalnie)
   wizard:
     summary: Podsumowanie
   error:

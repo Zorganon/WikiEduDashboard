@@ -1,5 +1,5 @@
 import React from 'react';
-import Expandable from '../high_order/expandable.jsx';
+import PopoverExpandable from '../high_order/popover_expandable.jsx';
 import Popover from '../common/popover.jsx';
 import ServerActions from '../../actions/server_actions.js';
 import UserStore from '../../stores/user_store.js';
@@ -63,6 +63,7 @@ const EnrollButton = React.createClass({
   enroll(e) {
     e.preventDefault();
     const username = this.refs.username.value;
+    if (!username) { return; }
     const courseId = this.props.course_id;
     const userObject = { username, role: this.props.role };
 
@@ -205,4 +206,4 @@ const EnrollButton = React.createClass({
 }
 );
 
-export default Conditional(Expandable(EnrollButton));
+export default Conditional(PopoverExpandable(EnrollButton));

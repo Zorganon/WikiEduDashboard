@@ -203,7 +203,7 @@ lt:
     nocourses: Jūs nedalyvaujate jokiuose kursuose.
     none: Nėra
     no_available_actions: Nėra galimų veiksmų
-    overview: Apžvalga
+    overview: Pradžia
     passcode_prompt: 'Įveskite slaptažodį, norėdami prisijungti:'
     school: Mokykla
     start: Pradžia
@@ -260,6 +260,7 @@ lt:
     explore: Rasti Programas
     enroll: Pridėti Redaktorių
     enrollment: Dalyvavimas
+    courses_enrolled: Dalyvavo programose
     expected_students: Tikimasi Redaktorių
     join_course: Prisijungti prie programos
     join_details: Kad prisijungtumėte prie šios programos jums reikia slaptažodžio
@@ -406,6 +407,9 @@ lt:
       campus_volunteer: Universiteto Miestelio Savanoris
       online_volunteer: Internetinis Savanoris
       wiki_ed_staff: Viki Ed Darbuotojai
+  user_profiles:
+    disclaimer: Jūsų pateiktą informaciją bus vieša.
+    bio_placeholder: Pridėkite savo Biografiją (neprivaloma)
   wizard:
     assignment_type: Užduoties tipas
     course_dates: Kurso datos

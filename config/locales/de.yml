@@ -108,6 +108,7 @@ de:
     view_doc: Die Summe aller Aufrufe für jeden Artikel während des Projektes
     view_on_wiki: Im Wiki ansehen
     views_added: '%{count} neue Aufrufe für %{title} hinzugefügt'
+    edit_size: Bearbeitungsgröße
     wp10: Strukturelle Vollständigkeit
     wp10_doc: Die Bewertung „Strukturelle Vollständigkeit“ stellt dar, wie sehr ein
       Artikel dem Modell eines reifen Wikipedia-Artikels entspricht, basierend auf
@@ -176,6 +177,8 @@ de:
       darüberkopiert.
     title: Titel
     use_start_end_dates: Start- und Enddaten verwenden
+  chat:
+    label: Chat
   courses:
     activity: Aktivität
     active_courses: Aktive %{course_type}
@@ -259,6 +262,9 @@ de:
       start_date: Startdatum
       start_date_placeholder: Startdatum (JJJJ-MM-TT)
       subject: Thema
+      update_scheduled: Aktualisierung geplant. Die Daten werden zusammen mit allen
+        aktuellen Programmen während des nächsten Aktualisierungszyklusses aktualisiert.
+        Dies kann typischerweise mehrere Stunden dauern.
     current: Aktuelle Kurse
     delete_course: Kurs löschen
     dismiss_survey: Ausblenden
@@ -266,9 +272,12 @@ de:
       möchtest?
     duration: Kursdauer
     edit_course_dates: Kursdaten bearbeiten
+    enable_chat: Chat aktivieren
     end: Ende
+    ended: Der Kurs ist beendet.
     enroll: Einschreiben
     enrollment: Einschreibung
+    courses_enrolled: Eingeschriebene Kurse
     error:
       exists: Dieser Kurs ist bereits vorhanden! Bitte versuche es erneut mit einem
         anderen Titel, einer anderen Schule oder Dauer.
@@ -287,6 +296,10 @@ de:
     join_course: Dem Kurs beitreten
     join_prompt: „%{title}“ beitreten?
     join_successful: Du bist %{title} erfolgreich beigetreten.
+    join_failed: Einschreiben fehlgeschlagen.
+    join_failure_details:
+      cannot_join_twice: Benutzer können sich nicht zweimal in den gleichen Kurs einschreiben.
+      not_yet_approved: Dieser Kurs wurde noch nicht zur Einschreibung freigegeben.
     join_details: Um diesem Kurs beizutreten, benötigst du vom Kursleiter den Passcode
       oder einen Einschreibungslink, der den Passcode enthält. Falls du diesen nicht
       erhalten hast, kontaktiere deinen Kursleiter.
@@ -304,7 +317,7 @@ de:
       aller Studenten, die mit der Vervollständigung der zugewiesenen Ausbildungsmodule
       überfällig sind. Bist du sicher, dass du dies tun möchtest?
     no_available_actions: Keine verfügbaren Aktionen
-    overview: Übersicht
+    overview: Start
     passcode: Passcode
     passcode_none: Kein Passcode
     passcode_prompt: 'Gib zum Beitreten den Passcode ein:'
@@ -400,6 +413,7 @@ de:
     explore: Programme finden
     enroll: Autor hinzufügen
     enrollment: Teilnahme
+    courses_enrolled: Teilgenommene Programme
     expected_students: Erwartete Autoren
     instructors: Vermittler
     join_course: Dem Programm beitreten
@@ -490,7 +504,9 @@ de:
     diff: Unterschied
     diff_show: Anzeigen
     diff_hide: Ausblenden
+    edit_time_span: Bearbeitungen traten auf von %{first_time} bis %{last_time}
     edited_by: Bearbeitet von
+    edited_on: Bearbeitet am %{edit_date}
     loading: Lade Versionen …
     none: Dieser Kurs hat keine letzte Bearbeitungsaktivität.
     time_doc: Die Zeit jeder Version in deiner Ortszeit
@@ -634,8 +650,6 @@ de:
     up_to_date_with_training: mit der Ausbildung auf dem Laufenden
     username: Benutzername
     username_placeholder: Benutzername
-    user_impact: Gesamtauswirkung durch %{username}
-    student_impact: Gesamtauswirkung durch die Studenten von %{username}
     role:
       visitor: Besucher
       student: Student
@@ -643,6 +657,14 @@ de:
       campus_volunteer: Campus-Volontär
       online_volunteer: Online-Volontär
       wiki_ed_staff: Mitarbeiter von Wiki Ed
+  user_profiles:
+    student_impact: Gesamtauswirkung durch %{username} als Student
+    instructor_impact: Gesamtauswirkung durch %{username} als Kursleiter
+    instructors_student_impact: Gesamtauswirkung durch die Studenten von %{username}
+    disclaimer: Die angegebenen Informationen werden öffentlich verfügbar gemacht.
+    bio_placeholder: Ergänze deine Biografie (optional)
+    location_placeholder: Ergänze deinen Standort (optional)
+    institution_placeholder: Name der Einrichtung (optional)
   wiki_edits:
     notify_overdue:
       confirm: Dies sendet eine Erinnerung an die Diskussionsseiten aller Studenten,
@@ -751,4 +773,6 @@ de:
       message: Dies ist eine Erinnerung an die Umfrage für deinen Kurs „%{course_title}“.
         Rückmeldungen zu dieser Umfrage helfen uns dabei, die Unterstützung für Wikipedia-Zuweisungen
         wie deine zu verbessern.
+  feedback_form_responses:
+    no_responses: Es gibt noch keine Rückmeldungsantworten.
 ...
