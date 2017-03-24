@@ -83,7 +83,7 @@ const API = {
     });
   },
 
-  fetchStatsData(username){
+  fetchUserProfileStats(username){
     return new Promise((res, rej) =>
       $.ajax({
         type: 'GET',
@@ -146,23 +146,6 @@ const API = {
         return rej(obj);
       })
     );
-  },
-
-  fetchProfileStatsData(opts) {
-      return new Promise((res, rej) =>
-        $.ajax({
-          type: 'GET',
-          url: `/users/stats_data.json?username=${opts}`,
-          success(data) {
-            console.log('Received profile stats data');
-            return res(data);
-          }
-        })
-        .fail((obj) => {
-          logErrorMessage(obj);
-          return rej(obj);
-        })
-      );
   },
 
   fetchRecentEdits(opts = {}) {

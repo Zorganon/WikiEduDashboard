@@ -107,6 +107,7 @@ zh-CN:
   assignments:
     article: 条目%{title}已被分配
     already_exists: 此分配已存在！
+    title_too_large: 标题不应超过255个字符
     assignees: 委托人
     assign_other: 分配一个条目
     add_available: 添加一个可用条目
@@ -237,6 +238,8 @@ zh-CN:
       exists: 该课程已存在！请使用不同的标题、学校或学期再试。
       user_exists: 对不起，%{username}不是一位存在的用户。
       invalid_language_or_project: 无效语言/项目
+      invalid_slug: 清空课程所属学校/标题。
+      duplicate_slug: 另一个叫%{slug}的课程已存在。
     expected_students: 预期学生
     gradeables_none: 此课程没有可批改作业。
     instructor:
@@ -276,6 +279,7 @@ zh-CN:
     revisions_doc: 过去%{timeframe}天内的编辑数
     revisions_none: 此课程最近没有活跃编辑维基百科。
     school: 学校
+    school_and_term: 机构/学期
     start: 开始
     start_typing: 开始输入
     students: 学生
@@ -317,6 +321,7 @@ zh-CN:
       notification_message: 接受我们为此课程设立的调查。
       link: 接受调查
   courses_generic:
+    all_courses: 所有计划
     archived: 存档的程序
     articles_none: 目前此项目尚无编辑的条目。
     assignment_end: 时间轴终点
@@ -355,6 +360,7 @@ zh-CN:
     published: 此项目已经发布！编辑者可以通过访问下面的URL登记：
     revisions_none: 此项目没有最近编辑活动。
     school: 机构
+    school_and_term: 机构/何时
     student_editors: 编辑者
     students: 编辑者
     students_none: 此项目没有编辑者登记。
