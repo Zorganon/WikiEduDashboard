@@ -31,6 +31,8 @@ fr:
     field_required: Ce champ est obligatoire
     field_invalid_characters: Ce champ contient des caractères non valides
     field_invalid_date: Ce champ requiert une date au format AAAA-MM-JJ
+    field_invalid_date_time: La fin doit être avant le début (les heures vont de 0
+      à 23).
     greeting2: Bienvenue !
     greeting_extended: Bienvenue dans Wikipédia
     greeting: Bonjour !
@@ -191,7 +193,7 @@ fr:
     title: Titre
     use_start_end_dates: Utiliser les dates de début et de fin
   chat:
-    label: Discussion
+    label: Clavardage
   courses:
     activity: Activité
     active_courses: '%{course_type} actifs'
@@ -285,7 +287,7 @@ fr:
       sondage ?
     duration: Durée du cours
     edit_course_dates: Modifier les dates du cours
-    enable_chat: Activer la discussion
+    enable_chat: Activer le clavardage
     end: Fin
     ended: Le cours est terminé.
     enroll: S’inscrire
