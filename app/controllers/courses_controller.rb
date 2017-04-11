@@ -41,7 +41,8 @@ class CoursesController < ApplicationController
     handle_course_announcement(@course.instructors.first)
     slug_from_params if should_set_slug?
     @course.update course: course_params
-    ensure_passcode_set
+    set_has_passcode
+    ensure_passcode_set if @course.has_passcode
     UpdateCourseWorker.schedule_edits(course: @course, editing_user: current_user)
     render json: { course: @course }
   end
@@ -167,6 +168,10 @@ class CoursesController < ApplicationController
 
     course[:slug] = slug.tr(' ', '_')
   end
+
+  def set_has_passcode
+    return if @course.passcode_required?
+    @course.has_passcode = @course.passcode.nil? ? false : true
 
   def ensure_passcode_set
     return unless course_params[:passcode].nil?
