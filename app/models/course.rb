@@ -288,7 +288,7 @@ class Course < ActiveRecord::Base
   end
 
   def passcode_required?
-    raise NotImplemented
+    raise NotImplementedError
   end
 
   private

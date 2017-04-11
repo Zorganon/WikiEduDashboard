@@ -137,12 +137,41 @@ describe CoursesController do
     end
 
     context 'setting passcode' do
-      let(:course) { create(:course) }
-      before { course.update_attribute(:passcode, nil) }
-      it 'sets if it is nil and not in params' do
-        params = { id: course.slug, course: { title: 'foo' } }
-        put :update, params: params, format: :json
-        expect(course.reload.passcode).to match(/[a-z]{8}/)
+      context 'when not required' do  
+        let(:course) { create(:course) }
+        before { course.update_attribute(:passcode, nil) }
+        before { course.update_attribute(:type, 'Editathon') }
+              
+        it 'stays nil if nil passed from params' do
+          params = { id: course.slug, course: { title: 'bar', passcode: nil } }
+          put :update, params: params, format: :json
+          expect(course.reload.passcode).to be_nil
+        end
+
+        it 'saves input if passed from params' do
+          params = { id: course.slug, course: { title: 'bar', passcode: 'freddy' } }
+          put :update, params: params, format: :json
+          expect(course.reload.passcode).to match(/freddy/)
+        end
+      end
+
+      context 'when required' do
+        context 'and passcode is nil' do
+          before { course.update_attribute(:passcode, nil) }
+          it 'sets if it is nil and not in params' do
+            params = { id: course.slug, course: { title: 'foo' } }
+            put :update, params: params, format: :json
+            expect(course.reload.passcode).to match(/[a-z]{8}/)
+          end
+        end
+        context 'and passcode not nil' do
+          before { course.update_attribute(:passcode, 'freddy') }
+          it 'does nothing if passed nil in params' do
+            params = { id: course.slug, course: { title: 'foo', passcode: nil } }          
+            put :update, params: params, format: :json
+            expect(course.reload.passcode).to match(/freddy/)
+          end
+        end
       end
     end
 
