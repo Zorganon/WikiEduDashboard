@@ -287,6 +287,10 @@ class Course < ActiveRecord::Base
     order_weeks
   end
 
+  def passcode_required?
+    raise NotImplemented
+  end
+
   private
 
   def trained_students_manager

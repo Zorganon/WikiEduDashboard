@@ -72,4 +72,8 @@ class ClassroomProgramCourse < Course
   def multiple_roles_allowed?
     false
   end
+
+  def passcode_required?
+    true
+  end
 end
