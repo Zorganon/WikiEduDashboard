@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304003631) do
+ActiveRecord::Schema.define(version: 20170411162116) do
 
   create_table "alerts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "course_id"
@@ -49,6 +49,8 @@ ActiveRecord::Schema.define(version: 20170304003631) do
     t.date     "average_views_updated_at"
     t.integer  "wiki_id"
     t.integer  "mw_page_id"
+    t.index ["mw_page_id"], name: "index_articles_on_mw_page_id", using: :btree
+    t.index ["namespace", "wiki_id", "title"], name: "index_articles_on_namespace_and_wiki_id_and_title", using: :btree
   end
 
   create_table "articles_courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -132,6 +134,7 @@ ActiveRecord::Schema.define(version: 20170304003631) do
     t.string   "thumbwidth"
     t.string   "thumbheight"
     t.boolean  "deleted",                  default: false
+    t.index ["user_id"], name: "index_commons_uploads_on_user_id", using: :btree
   end
 
   create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -174,6 +177,8 @@ ActiveRecord::Schema.define(version: 20170304003631) do
     t.boolean  "needs_update",                        default: false
     t.string   "chatroom_id"
     t.text     "flags",                 limit: 65535
+    t.boolean  "passcode_required",                   default: true
+    t.boolean  "has_passcode"
     t.index ["slug"], name: "index_courses_on_slug", using: :btree
   end
 
@@ -282,6 +287,8 @@ ActiveRecord::Schema.define(version: 20170304003631) do
     t.integer  "mw_page_id"
     t.text     "features",       limit: 65535
     t.index ["article_id", "date"], name: "index_revisions_on_article_id_and_date", using: :btree
+    t.index ["mw_rev_id"], name: "index_revisions_on_mw_rev_id", using: :btree
+    t.index ["user_id"], name: "index_revisions_on_user_id", using: :btree
   end
 
   create_table "survey_assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
