@@ -144,7 +144,7 @@ describe CoursesController do
         it 'stays nil if nil passed from params' do
           params = { id: course.slug, course: { title: 'foo', passcode: nil } }
           put :update, params: params, format: :json
-          expect(course.reload.passcode).to be_nil
+          expect(course.reload.passcode).to be_blank
         end
 
         it 'saves input if passed from params' do
@@ -158,7 +158,7 @@ describe CoursesController do
           it 'saves nil if passed from params' do
             params = { id: course.slug, course: { title: 'foo', passcode: nil } }
             put :update, params: params, format: :json
-            expect(course.reload.passcode).to be_nil
+            expect(course.reload.passcode).to be_blank
           end
         end
       end
@@ -181,10 +181,10 @@ describe CoursesController do
 
         context 'and passcode is not nil' do
           before { course.update_attribute(:passcode, 'freddy') }
-          it 'does nothing if nil is passed from params' do
+          it 'sets if nil is passed from params' do
             params = { id: course.slug, course: { title: 'foo', passcode: nil } }
             put :update, params: params, format: :json
-            expect(course.reload.passcode).to match(/(freddy)/)
+            expect(course.reload.passcode).to match(/[a-z]{8}/)
           end
         end
       end

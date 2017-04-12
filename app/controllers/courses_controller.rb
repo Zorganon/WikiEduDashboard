@@ -42,7 +42,7 @@ class CoursesController < ApplicationController
     slug_from_params if should_set_slug?
     @course.update course: course_params
     set_has_passcode
-    ensure_passcode_set if @course.has_passcode
+    ensure_passcode_set if @course.passcode_required?
     UpdateCourseWorker.schedule_edits(course: @course, editing_user: current_user)
     render json: { course: @course }
   end
