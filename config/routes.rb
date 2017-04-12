@@ -1,3 +1,4 @@
+
 # Page titles on Wikipedia may include dots, so this constraint is needed.
 
 Rails.application.routes.draw do
@@ -42,6 +43,10 @@ Rails.application.routes.draw do
 
   # Self-enrollment: joining a course by entering a passcode or visiting a url
   get 'courses/:course_id/enroll/:passcode' => 'self_enrollment#enroll_self',
+      constraints: { course_id: /.*/ }
+
+  # Self-enrollment: joining a course with no passcode by visiting a url
+  get 'courses/:course_id/enroll' => 'self_enrollment#enroll_self',
       constraints: { course_id: /.*/ }
 
   # Courses
