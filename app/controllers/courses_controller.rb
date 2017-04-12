@@ -171,10 +171,11 @@ class CoursesController < ApplicationController
 
   def set_has_passcode
     return if @course.passcode_required?
-    @course.has_passcode = @course.passcode.nil? ? false : true
+    @course.update_attribute(:has_passcode, (@course.passcode.blank? ? false : true ) )
+  end
 
   def ensure_passcode_set
-    return unless course_params[:passcode].nil?
+    return unless course_params[:passcode].blank?
     @course.update_attribute(:passcode, Course.generate_passcode)
   end
 

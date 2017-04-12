@@ -172,7 +172,7 @@ class Course < ActiveRecord::Base
   validates_attachment_content_type :syllabus,
                                     content_type: %w(application/pdf application/msword)
 
-  validates :passcode, presence: true, unless: :legacy?
+  validates :passcode, presence: true, if: :passcode_required?
   validates :start, presence: true
   validates :end, presence: true
 
@@ -191,6 +191,7 @@ class Course < ActiveRecord::Base
   before_save :ensure_required_params
   before_save :order_weeks
   before_save :set_default_times
+  
 
   ####################
   # Instance methods #
@@ -288,7 +289,7 @@ class Course < ActiveRecord::Base
   end
 
   def passcode_required?
-    raise NotImplementedError
+    true
   end
 
   private
