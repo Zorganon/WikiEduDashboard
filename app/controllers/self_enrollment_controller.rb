@@ -80,7 +80,8 @@ class SelfEnrollmentController < ApplicationController
   end
 
   def passcode_valid?
-    !@course.passcode.nil? && params[:passcode] == @course.passcode
+    return true unless @course.has_passcode?
+    !@course.passcode.empty? && params[:passcode] == @course.passcode    
   end
 
   def add_student_to_course
