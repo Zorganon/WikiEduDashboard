@@ -66,6 +66,18 @@ describe SelfEnrollmentController do
 
         context 'when type is Editathon' do
           let(:course) { create(:editathon, end: Time.zone.today + 1.week) }
+          context 'when passcode is empty' do
+            before do 
+              course.passcode = ""
+              course.has_passcode = false
+            end
+            it 'enrolls user (and redirects) and updates the user count if params passcode is empty string' do
+              request_params[:passcode] = ""
+              get 'enroll_self', params: request_params
+              expect(subject).to eq(302)
+              expect(course.students.count).to eq(1)
+            end
+          end
 
           context 'when the user is enrolled as a facilitator' do
             before do
