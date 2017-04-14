@@ -83,8 +83,6 @@ describe SelfEnrollmentController do
 
               it 'enrolls user (and redirects) and updates the user count' do
                 expect(course.user_count).to eq(0)
-                expect_any_instance_of(WikiCourseEdits).to receive(:enroll_in_course)
-                expect_any_instance_of(WikiPreferencesManager).to receive(:enable_visual_editor)
                 get 'enroll_self', params: request_params
                 expect(subject).to eq(302)
                 expect(course.students.count).to eq(1)
