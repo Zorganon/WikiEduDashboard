@@ -152,7 +152,21 @@ class Replica
 
   def compile_query_url(endpoint, query)
     base_url = 'http://tools.wmflabs.org/wikiedudashboard/'
-    "#{base_url}#{endpoint}?lang=#{@wiki.language}&project=#{@wiki.project}&#{query}"
+    "#{base_url}#{endpoint}?#{language_and_project_params}&#{query}"
+  end
+
+  # We must special-case Multilingual Wikisource/ Wikimedia Incubator because
+  # their labs database names do not follow the normal pattern; they are called
+  # 'sourceswiki' and 'incubatorwiki' respectively, which are the same as we'd
+  # get if a Wikipedia's language was "sources" or "incubator".
+  def language_and_project_params
+    if @wiki.project == 'wikisource' && @wiki.language.nil?
+      'lang=sources&project=wikipedia'
+    elsif @wiki.project == 'wikimedia' && @wiki.language == 'incubator'
+      "lang=incubator&project=wikipedia"
+    else
+      "lang=#{@wiki.language}&project=#{@wiki.project}"
+    end
   end
 
   def compile_usernames_query(users)

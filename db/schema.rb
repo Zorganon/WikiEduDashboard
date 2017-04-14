@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170411162116) do
+ActiveRecord::Schema.define(version: 20170414183725) do
 
   create_table "alerts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "course_id"
@@ -177,9 +177,7 @@ ActiveRecord::Schema.define(version: 20170411162116) do
     t.boolean  "needs_update",                        default: false
     t.string   "chatroom_id"
     t.text     "flags",                 limit: 65535
-    t.boolean  "passcode_required",                   default: true
-    t.boolean  "has_passcode"
-    t.index ["slug"], name: "index_courses_on_slug", using: :btree
+    t.index ["slug"], name: "index_courses_on_slug", unique: true, using: :btree
   end
 
   create_table "courses_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -193,6 +191,8 @@ ActiveRecord::Schema.define(version: 20170411162116) do
     t.string   "assigned_article_title"
     t.integer  "role",                   default: 0
     t.integer  "recent_revisions",       default: 0
+    t.index ["course_id"], name: "index_courses_users_on_course_id", using: :btree
+    t.index ["user_id"], name: "index_courses_users_on_user_id", using: :btree
   end
 
   create_table "feedback_form_responses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -363,7 +363,7 @@ ActiveRecord::Schema.define(version: 20170411162116) do
   end
 
   create_table "user_profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "bio"
+    t.text     "bio",                limit: 65535
     t.integer  "user_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -392,6 +392,7 @@ ActiveRecord::Schema.define(version: 20170411162116) do
     t.string   "locale"
     t.string   "chat_password"
     t.string   "chat_id"
+    t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
   create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

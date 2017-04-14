@@ -112,6 +112,7 @@ Rails.application.routes.draw do
   # Reports and analytics
   get 'analytics(/*any)' => 'analytics#index'
   post 'analytics(/*any)' => 'analytics#results'
+  get 'ungreeted' => 'analytics#ungreeted'
 
   # Campaigns
   resources :campaigns, param: :slug, except: :show do

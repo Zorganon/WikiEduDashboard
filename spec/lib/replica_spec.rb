@@ -149,8 +149,8 @@ describe Replica do
       end
     end
 
-    it 'functions identically on non-English wikis' do
-      VCR.use_cassette 'replica/es_revisions' do
+    it 'functions identically on wikidata' do
+      VCR.use_cassette 'replica/wikidata_revisions' do
         all_users = [
           build(:user, username: 'Ragesoss')
         ]
@@ -161,6 +161,36 @@ describe Replica do
         wikidata = Wiki.new(language: nil, project: 'wikidata')
         response = Replica.new(wikidata).get_revisions(all_users, rev_start, rev_end)
         expect(response.count).to eq(12)
+      end
+    end
+
+    it 'functions identically on multilingual wikisource' do
+      VCR.use_cassette 'replica/wikisource_revisions' do
+        all_users = [
+          build(:user, username: 'Jimregan')
+        ]
+
+        rev_start = 2017_03_27_003430
+        rev_end = 2017_03_28_000000
+
+        wikisource = Wiki.new(language: nil, project: 'wikisource')
+        response = Replica.new(wikisource).get_revisions(all_users, rev_start, rev_end)
+        expect(response.count).to eq(28)
+      end
+    end
+
+    it 'functions identically on wikimedia incubator' do
+      VCR.use_cassette 'replica/wikimedia_incubator_revisions' do
+        all_users = [
+          build(:user, username: 'Daad Ikram')
+        ]
+
+        rev_start = 2017_03_11_000000
+        rev_end = 2017_03_17_000000
+
+        incubator = Wiki.new(language: 'incubator', project: 'wikimedia')
+        response = Replica.new(incubator).get_revisions(all_users, rev_start, rev_end)
+        expect(response.count).to eq(1)
       end
     end
   end
