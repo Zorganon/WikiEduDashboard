@@ -39,15 +39,26 @@ const EnrollCard = React.createClass({
           </div>
         );
       }
-    // User is logged in and ready to enroll
     } else if (this.props.user.id && this.props.userRoles.notEnrolled) {
-      messageBody = (
-        <div>
-          <h1>{I18n.t('courses.join_prompt', { title: this.props.course.title || '' })}</h1>
-          <a className="button dark" href={this.props.course.enroll_url + this.props.passcode}>{I18n.t('courses.join')}</a>
-          <a className="button border" href={this.props.courseLink}>{I18n.t('application.cancel')}</a>
-        </div>
-      );
+      // User is logged in and ready to enroll and no passcode on course
+      if (!this.props.course.has_passcode) {
+        messageBody = (
+          <div>
+            <h1>{I18n.t('courses.join_prompt', { title: this.props.course.title || '' })}</h1>
+            <a className="button dark" href={this.props.course.enroll_url}>{I18n.t('courses.join')}</a>
+            <a className="button border" href={this.props.courseLink}>{I18n.t('application.cancel')}</a>
+          </div>
+        );
+      // user is logged in and ready to enroll and course has a passcode
+      } else {
+        messageBody = (
+          <div>
+            <h1>{I18n.t('courses.join_prompt', { title: this.props.course.title || '' })}</h1>
+            <a className="button dark" href={this.props.course.enroll_url + this.props.passcode}>{I18n.t('courses.join')}</a>
+            <a className="button border" href={this.props.courseLink}>{I18n.t('application.cancel')}</a>
+          </div>
+        );
+      }
     // User is already enrolled
     } else if (this.props.userRoles.isEnrolled) {
       messageBody = <h1>{I18n.t('courses.already_enrolled', { title: this.props.course.title })}</h1>;
