@@ -82,6 +82,7 @@ describe SelfEnrollmentController do
               end
 
               it 'enrolls user (and redirects) and updates the user count' do
+                stub_oauth_edit
                 expect(course.user_count).to eq(0)
                 get 'enroll_self', params: request_params
                 expect(subject).to eq(302)
