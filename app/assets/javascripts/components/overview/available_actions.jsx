@@ -48,7 +48,11 @@ const AvailableActions = React.createClass({
     };
     const confirmMessage = I18n.t('courses.passcode_prompt');
     const joinDescription = CourseUtils.i18n('join_details', this.state.course.string_prefix);
-
+    if (!this.state.course.has_passcode) {
+      console.log("no passcode, value is: " + this.state.course.has_passcode);
+    }
+    if ("has passcode, value is: " + this.state.course.has_passcode)
+      console.log(this.state.course.has_passcode);
     this.setState({ onConfirm, onCancel, confirmMessage, joinDescription, showConfirm: true });
   },
 

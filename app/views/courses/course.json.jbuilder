@@ -23,6 +23,7 @@ json.course do
   json.word_count number_to_human @course.word_count
   json.view_count number_to_human @course.view_sum
   json.syllabus @course.syllabus.url if @course.syllabus.file?
+  json.has_passcode @course.has_passcode
 
   if user_role.zero? # student role
     ctpm = CourseTrainingProgressManager.new(current_user, @course)
@@ -42,8 +43,10 @@ json.course do
   if user_role.positive? # non-student role
     json.passcode @course.passcode
     json.canUploadSyllabus true
-  elsif @course.passcode
-    json.passcode '****'
+  else
+    if @course.passcode
+      json.passcode '****'
+    end
     json.canUploadSyllabus false
   end
 end
