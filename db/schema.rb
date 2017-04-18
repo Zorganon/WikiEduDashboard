@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414203743) do
+ActiveRecord::Schema.define(version: 20170418183246) do
 
-  create_table "alerts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "alerts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "course_id"
     t.integer  "user_id"
     t.integer  "article_id"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["user_id"], name: "index_alerts_on_user_id", using: :btree
   end
 
-  create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.bigint   "views",                               default: 0
     t.datetime "created_at"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["namespace", "wiki_id", "title"], name: "index_articles_on_namespace_and_wiki_id_and_title", using: :btree
   end
 
-  create_table "articles_courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "articles_courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "article_id"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.boolean  "new_article",   default: false
   end
 
-  create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.integer  "wiki_id"
   end
 
-  create_table "blocks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "blocks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "kind"
     t.text     "content",             limit: 65535
     t.integer  "week_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.text     "training_module_ids", limit: 65535
   end
 
-  create_table "campaigns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "campaigns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.string   "slug"
     t.string   "url"
@@ -99,21 +99,21 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.text     "template_description", limit: 65535
   end
 
-  create_table "campaigns_courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "campaigns_courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "campaign_id"
     t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "campaigns_survey_assignments", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "campaigns_survey_assignments", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "survey_assignment_id"
     t.integer "campaign_id"
     t.index ["campaign_id"], name: "index_campaigns_survey_assignments_on_campaign_id", using: :btree
     t.index ["survey_assignment_id"], name: "index_campaigns_survey_assignments_on_survey_assignment_id", using: :btree
   end
 
-  create_table "campaigns_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "campaigns_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "campaign_id"
     t.integer  "user_id"
     t.integer  "role",        default: 0
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["user_id"], name: "index_campaigns_users_on_user_id", using: :btree
   end
 
-  create_table "commons_uploads", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "commons_uploads", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "file_name",   limit: 2000
     t.datetime "uploaded_at"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["user_id"], name: "index_commons_uploads_on_user_id", using: :btree
   end
 
-  create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -177,11 +177,10 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.boolean  "needs_update",                        default: false
     t.string   "chatroom_id"
     t.text     "flags",                 limit: 65535
-    t.boolean  "has_passcode"
     t.index ["slug"], name: "index_courses_on_slug", unique: true, using: :btree
   end
 
-  create_table "courses_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "courses_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "course_id"
@@ -196,14 +195,14 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["user_id"], name: "index_courses_users_on_user_id", using: :btree
   end
 
-  create_table "feedback_form_responses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "feedback_form_responses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "subject"
     t.text     "body",       limit: 65535
     t.integer  "user_id"
     t.datetime "created_at"
   end
 
-  create_table "gradeables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "gradeables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.integer  "points"
     t.integer  "gradeable_item_id"
@@ -212,7 +211,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.string   "gradeable_item_type"
   end
 
-  create_table "question_group_conditionals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "question_group_conditionals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "rapidfire_question_group_id"
     t.integer  "campaign_id"
     t.datetime "created_at",                  null: false
@@ -221,7 +220,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["rapidfire_question_group_id"], name: "index_question_group_conditionals_on_rapidfire_question_group_id", using: :btree
   end
 
-  create_table "rapidfire_answer_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "rapidfire_answer_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "question_group_id"
     t.string   "user_type"
     t.integer  "user_id"
@@ -232,7 +231,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["user_id", "user_type"], name: "index_rapidfire_answer_groups_on_user_id_and_user_type", using: :btree
   end
 
-  create_table "rapidfire_answers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "rapidfire_answers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "answer_group_id"
     t.integer  "question_id"
     t.text     "answer_text",           limit: 65535
@@ -243,14 +242,14 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["question_id"], name: "index_rapidfire_answers_on_question_id", using: :btree
   end
 
-  create_table "rapidfire_question_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "rapidfire_question_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "tags"
   end
 
-  create_table "rapidfire_questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "rapidfire_questions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "question_group_id"
     t.string   "type"
     t.text     "question_text",           limit: 65535
@@ -269,7 +268,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["question_group_id"], name: "index_rapidfire_questions_on_question_group_id", using: :btree
   end
 
-  create_table "revisions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "revisions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "characters",                   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -292,7 +291,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["user_id"], name: "index_revisions_on_user_id", using: :btree
   end
 
-  create_table "survey_assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "survey_assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "courses_user_role"
     t.datetime "created_at",                                                            null: false
     t.datetime "updated_at",                                                            null: false
@@ -309,7 +308,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["survey_id"], name: "index_survey_assignments_on_survey_id", using: :btree
   end
 
-  create_table "survey_notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "survey_notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "courses_users_id"
     t.integer  "course_id"
     t.integer  "survey_assignment_id"
@@ -325,7 +324,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["survey_assignment_id"], name: "index_survey_notifications_on_survey_assignment_id", using: :btree
   end
 
-  create_table "surveys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "surveys", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
@@ -337,7 +336,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.text     "optout",               limit: 65535
   end
 
-  create_table "surveys_question_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "surveys_question_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "survey_id"
     t.integer  "rapidfire_question_group_id"
     t.integer  "position"
@@ -347,7 +346,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["survey_id"], name: "index_surveys_question_groups_on_survey_id", using: :btree
   end
 
-  create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "course_id"
     t.string   "tag"
     t.string   "key"
@@ -356,20 +355,16 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["course_id", "key"], name: "index_tags_on_course_id_and_key", unique: true, using: :btree
   end
 
-  create_table "training_modules_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "training_modules_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "training_module_id"
     t.string   "last_slide_completed"
     t.datetime "completed_at"
+    t.index ["user_id", "training_module_id"], name: "index_training_modules_users_on_user_id_and_training_module_id", using: :btree
   end
 
-<<<<<<< HEAD
-  create_table "user_profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
-    t.string   "bio"
-=======
   create_table "user_profiles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "bio",                limit: 65535
->>>>>>> dirty
     t.integer  "user_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -379,7 +374,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.string   "institution"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "username"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -401,7 +396,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
-  create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "versions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "item_type",                     null: false
     t.integer  "item_id",                       null: false
     t.string   "event",                         null: false
@@ -411,7 +406,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
   end
 
-  create_table "weeks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "weeks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
     t.integer  "course_id"
     t.datetime "created_at"
@@ -419,7 +414,7 @@ ActiveRecord::Schema.define(version: 20170414203743) do
     t.integer  "order",      default: 1, null: false
   end
 
-  create_table "wikis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "wikis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "language", limit: 16
     t.string "project",  limit: 16
     t.index ["language", "project"], name: "index_wikis_on_language_and_project", unique: true, using: :btree
