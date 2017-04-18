@@ -44,6 +44,20 @@ describe SelfEnrollmentController do
             expect(course.students.count).to eq(1)
             expect(course.reload.user_count).to eq(1)
           end
+
+          context 'when user passes no passcode' do
+            let(:request_params) do
+              { course_id: course.slug, titleterm: 'foobar' }
+            end
+            it 'redirects without enrolling the user' do
+              puts request_params[:passcode]
+              expect(course.user_count).to eq(0)
+              get 'enroll_self', params: request_params
+              expect(subject).to eq(302)
+              expect(course.students.count).to eq(0)
+              expect(course.reload.user_count).to eq(0)
+            end
+          end
         end
 
         context 'when type is ClassroomProgramCourse' do

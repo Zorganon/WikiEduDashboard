@@ -1,4 +1,3 @@
-
 # frozen_string_literal: true
 
 require 'oauth'
@@ -174,7 +173,12 @@ class CoursesController < ApplicationController
 
   def set_has_passcode
     return if @course.passcode_required?
-    @course.update_attribute(:has_passcode, (@course.passcode.blank? ? false : true ) )
+    if @course.passcode.blank?
+      @course.update_attribute(:has_passcode, false)
+      @course.update_attribute(:passcode, nil)
+      return
+    end
+    @course.update_attribute(:has_passcode, true)
   end
 
   def ensure_passcode_set
