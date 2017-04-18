@@ -38,6 +38,11 @@ const AvailableActions = React.createClass({
   },
 
   join() {
+    if (!this.state.course.has_passcode) {
+      const EnrollURL = this.state.course.enroll_url;
+      ConfirmActions.actionConfirmed();
+      return window.location = EnrollURL;
+    } else {
     const EnrollURL = this.state.course.enroll_url;
     const onConfirm = function (passcode) {
       ConfirmActions.actionConfirmed();
@@ -47,14 +52,9 @@ const AvailableActions = React.createClass({
       return ConfirmActions.actionCancelled();
     };
     const confirmMessage = I18n.t('courses.passcode_prompt');
-    const joinDescription = CourseUtils.i18n('join_details', this.state.course.string_prefix);
-    if (!this.state.course.has_passcode) {
-      console.log(this.state.course.has_passcode);
-    }
-    if (this.state.course.has_passcode) {
-      console.log(this.state.course.has_passcode);
-    }
+    const joinDescription = CourseUtils.i18n('join_details', this.state.course.string_prefix);        
     this.setState({ onConfirm, onCancel, confirmMessage, joinDescription, showConfirm: true });
+    }
   },
 
   leave() {
