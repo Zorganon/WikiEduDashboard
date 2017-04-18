@@ -83,7 +83,7 @@ const EnrollButton = React.createClass({
       ConfirmActions.confirmationInitiated();
       return this.setState({ onConfirm, onCancel, confirmMessage, showConfirm: true });
     }
-    // If the user us already enrolled
+    // If the user is already enrolled
     return NotificationActions.addNotification({
       message: I18n.t('users.already_enrolled'),
       closable: true,

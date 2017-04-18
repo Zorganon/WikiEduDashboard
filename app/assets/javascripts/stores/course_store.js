@@ -36,7 +36,8 @@ const addCourse = () =>
     end: null,
     day_exceptions: '',
     weekdays: '0000000',
-    editingSyllabus: false
+    editingSyllabus: false,
+    has_passcode: ''
   })
 ;
 

@@ -2,6 +2,7 @@
 require 'rails_helper'
 
 describe CoursesController do
+  before { stub_wiki_validation }
   describe '#show' do
     let(:course) { create(:course) }
     let(:slug) { course.slug }
@@ -137,12 +138,56 @@ describe CoursesController do
     end
 
     context 'setting passcode' do
-      let(:course) { create(:course) }
-      before { course.update_attribute(:passcode, nil) }
-      it 'sets if it is nil and not in params' do
-        params = { id: course.slug, course: { title: 'foo' } }
-        put :update, params: params, format: :json
-        expect(course.reload.passcode).to match(/[a-z]{8}/)
+      context 'when not required' do  
+        let(:course) { create(:editathon) }
+        before { course.update_attribute(:passcode, nil) }
+              
+        it 'stays nil if string passed from params' do
+          params = { id: course.slug, course: { title: 'foo', passcode: "" } }
+          put :update, params: params, format: :json
+          expect(course.reload.passcode).to be_nil
+        end
+
+        it 'saves input if passed from params' do
+          params = { id: course.slug, course: { title: 'foo', passcode: 'freddy' } }
+          put :update, params: params, format: :json
+          expect(course.reload.passcode).to match(/(freddy)/)
+        end
+
+        context'and passcode is not nil' do
+          before { course.update_attribute(:passcode, 'freddy') }
+          it 'saves nil if passed "" from params' do
+            params = { id: course.slug, course: { title: 'foo', passcode: "" } }
+            put :update, params: params, format: :json
+            expect(course.reload.passcode).to be_nil
+          end
+        end
+      end
+
+      context 'when passcode is required' do
+        let(:course) { create(:course) }
+        before { course.update_attribute(:passcode, nil) }
+              
+        it 'sets if nil and "" passed from params' do
+          params = { id: course.slug, course: { title: 'foo', passcode: "" } }
+          put :update, params: params, format: :json
+          expect(course.reload.passcode).to match(/[a-z]{8}/)
+        end
+
+        it 'saves input if passed from params' do
+          params = { id: course.slug, course: { title: 'foo', passcode: 'freddy' } }
+          put :update, params: params, format: :json
+          expect(course.reload.passcode).to match(/freddy/)
+        end
+
+        context 'and passcode is not nil' do
+          before { course.update_attribute(:passcode, 'freddy') }
+          it 'sets if nil is passed from params' do
+            params = { id: course.slug, course: { title: 'foo', passcode: "" } }
+            put :update, params: params, format: :json
+            expect(course.reload.passcode).to match(/[a-z]{8}/)
+          end
+        end
       end
     end
 

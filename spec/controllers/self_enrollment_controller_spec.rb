@@ -44,6 +44,20 @@ describe SelfEnrollmentController do
             expect(course.students.count).to eq(1)
             expect(course.reload.user_count).to eq(1)
           end
+
+          context 'when user passes no passcode' do
+            let(:request_params) do
+              { course_id: course.slug, titleterm: 'foobar' }
+            end
+            it 'redirects without enrolling the user' do
+              puts request_params[:passcode]
+              expect(course.user_count).to eq(0)
+              get 'enroll_self', params: request_params
+              expect(subject).to eq(302)
+              expect(course.students.count).to eq(0)
+              expect(course.reload.user_count).to eq(0)
+            end
+          end
         end
 
         context 'when type is ClassroomProgramCourse' do
@@ -67,6 +81,30 @@ describe SelfEnrollmentController do
         context 'when type is Editathon' do
           let(:course) { create(:editathon, end: Time.zone.today + 1.week) }
 
+          context 'when course has no passcode' do
+            let(:course) { create(:editathon, end: Time.zone.today + 1.week, passcode: '', has_passcode: false) }
+
+            #this test is just to ensure passcode requirement logic is still working  
+            it ' has no passcode and passcode_required? returns false' do
+              expect(course.passcode_required?).to be_falsey
+              expect(course.has_passcode).to be_falsey
+            end
+
+            context 'when no passcode in params' do
+              let(:request_params) do
+                { course_id: course.slug, titleterm: 'foobar' }
+              end
+
+              it 'enrolls user (and redirects) and updates the user count' do
+                stub_oauth_edit
+                expect(course.user_count).to eq(0)
+                get 'enroll_self', params: request_params
+                expect(subject).to eq(302)
+                expect(course.students.count).to eq(1)
+                expect(course.reload.user_count).to eq(1)
+              end
+            end
+          end
           context 'when the user is enrolled as a facilitator' do
             before do
               create(:courses_user,
@@ -82,6 +120,7 @@ describe SelfEnrollmentController do
               expect(course.students.count).to eq(1)
             end
           end
+
         end
 
         context 'when the course has already ended' do

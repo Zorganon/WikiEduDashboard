@@ -136,7 +136,7 @@ const Details = React.createClass({
           type="text"
           label={I18n.t('courses.passcode')}
           placeholder={I18n.t('courses.passcode_none')}
-          required={true}
+          required={false}
         />
       );
     }

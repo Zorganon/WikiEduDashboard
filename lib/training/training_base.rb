@@ -21,10 +21,11 @@ class TrainingBase
     loader = TrainingLoader.new(content_class: self, path_to_yaml: path_to_yaml,
                                 wiki_base_page: wiki_base_page,
                                 trim_id_from_filename: trim_id_from_filename)
-    loader.load_content
 
+    @all = loader.load_content
     check_for_duplicate_slugs
     check_for_duplicate_ids
+    @all
   end
 
   # Called during initialization, and also via manual :training_reload action.
@@ -41,18 +42,11 @@ class TrainingBase
   # Use class instance variable @all to store all training content in memory.
   # This will normally persist until flushed or until the app is restarted.
   def self.all
-    @all ||= all_from_cache
+    @all ||= load_from_cache_or_rebuild
   end
 
-  # The Rails cache is persistent, but gets overwritten via load_all (which runs
-  # in an intializer)
-  def self.all_from_cache
-    cached = Rails.cache.read(cache_key)
-    if cached.nil?
-      load(path_to_yaml: path_to_yaml)
-      cached = Rails.cache.read(cache_key)
-    end
-    cached
+  def self.load_from_cache_or_rebuild
+    Rails.cache.read(cache_key) || load
   end
 
   # Clears both the class instance variable and the cache for the child class.

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'oauth'
 require "#{Rails.root}/lib/wiki_edits"
 require "#{Rails.root}/lib/wiki_course_edits"
@@ -43,7 +44,8 @@ class CoursesController < ApplicationController
     handle_course_announcement(@course.instructors.first)
     slug_from_params if should_set_slug?
     @course.update course: course_params
-    ensure_passcode_set
+    set_has_passcode
+    ensure_passcode_set if @course.passcode_required?
     UpdateCourseWorker.schedule_edits(course: @course, editing_user: current_user)
     render json: { course: @course }
   end
@@ -109,10 +111,9 @@ class CoursesController < ApplicationController
 
   def manual_update
     @course = find_course_by_slug(params[:id])
-    @course.manual_update if user_signed_in?
-    render plain: '', status: :ok
+    UpdateCourseRevisions.new(@course) if user_signed_in?
+    redirect_to "/courses/#{@course.slug}"
   end
-  helper_method :manual_update
 
   def needs_update
     @course = find_course_by_slug(params[:id])
@@ -170,8 +171,18 @@ class CoursesController < ApplicationController
     course[:slug] = slug.tr(' ', '_')
   end
 
+  def set_has_passcode
+    return if @course.passcode_required?
+    if @course.passcode.blank?
+      @course.update_attribute(:has_passcode, false)
+      @course.update_attribute(:passcode, nil)
+      return
+    end
+    @course.update_attribute(:has_passcode, true)
+  end
+
   def ensure_passcode_set
-    return unless course_params[:passcode].nil?
+    return unless course_params[:passcode].blank?
     @course.update_attribute(:passcode, Course.generate_passcode)
   end
 
@@ -193,7 +204,7 @@ class CoursesController < ApplicationController
       .permit(:id, :title, :description, :school, :term, :slug, :subject,
               :expected_students, :start, :end, :submitted, :passcode,
               :timeline_start, :timeline_end, :day_exceptions, :weekdays,
-              :no_day_exceptions, :cloned_status, :type)
+              :no_day_exceptions, :cloned_status, :type, :has_passcode)
   end
 
   SHOW_ENDPOINTS = %w(articles assignments campaigns check course revisions tag tags
