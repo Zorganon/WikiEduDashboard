@@ -7,13 +7,12 @@ json.course do
             :timeline_end, :day_exceptions, :weekdays, :no_day_exceptions,
             :updated_at, :string_prefix, :use_start_and_end_times, :type,
             :home_wiki, :upload_count, :uploads_in_use_count, :upload_usages_count,
-            :cloned_status, :flags)
+            :cloned_status, :flags, :has_passcode)
 
   json.term @course.cloned_status == 1 ? '' : @course.term
   json.legacy @course.legacy?
   json.ended !current?(@course) && @course.start < Time.zone.now
   json.published CampaignsCourses.exists?(course_id: @course.id)
-  json.enroll_url "#{request.base_url}#{course_slug_path(@course.slug)}/enroll/"
 
   json.created_count number_to_human @course.new_article_count
   json.edited_count number_to_human @course.article_count
@@ -24,6 +23,12 @@ json.course do
   json.view_count number_to_human @course.view_sum
   json.syllabus @course.syllabus.url if @course.syllabus.file?
   json.has_passcode @course.has_passcode
+
+  if !@course.has_passcode
+    json.enroll_url "#{request.base_url}#{course_slug_path(@course.slug)}/open/enroll/"
+  else
+    json.enroll_url "#{request.base_url}#{course_slug_path(@course.slug)}/enroll/"
+  end
 
   if user_role.zero? # student role
     ctpm = CourseTrainingProgressManager.new(current_user, @course)
