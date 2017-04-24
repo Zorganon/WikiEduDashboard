@@ -210,7 +210,7 @@ describe 'the course page', type: :feature, js: true do
       # expect(page).to have_css('button.dark[disabled="disabled"]')
     end
 
-    it "doesn't allow null values for passcode" do
+    it "doesn't allow null values for passcode if passcode_required? " do
       admin = create(:admin, id: User.last.id + 1)
       previous_passcode = Course.last.passcode
       login_as(admin)
@@ -224,6 +224,9 @@ describe 'the course page', type: :feature, js: true do
       expect(Course.last.passcode).to eq(previous_passcode)
     end
   end
+
+
+
 
   describe 'articles edited view' do
     it 'displays a list of articles, and sort articles by class' do

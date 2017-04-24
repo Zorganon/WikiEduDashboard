@@ -34,4 +34,25 @@ describe('CourseActions', () => {
       done();
     });
   });
+
+  it('CourseStore saves editathon type', (done) => {
+    const course = { title: 'Foo', type: 'Editathon', password: 'pizza', subject: 'cooking', slug: 'blom' };
+    CourseActions.addCourse();
+    CourseActions.updateCourse(course).then(() => {
+      expect(CourseStore.getCourse().type).to.eq('Editathon');
+      done();
+    });
+  });
+
+  it('CourseStore knows editathon has_password', (done) => {
+    const course = { title: 'Foo', type: 'Editathon', password: 'pizza', subject: 'cooking', slug: 'blom', has_password: 'true' };
+    CourseActions.addCourse();
+    CourseActions.updateCourse(course).then(() => {
+      expect(CourseStore.getCourse().has_password).to.eq('true');
+      done();
+    });
+  });
 });
+
+
+
