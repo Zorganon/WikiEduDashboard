@@ -7,7 +7,7 @@ json.course do
             :timeline_end, :day_exceptions, :weekdays, :no_day_exceptions,
             :updated_at, :string_prefix, :use_start_and_end_times, :type,
             :home_wiki, :upload_count, :uploads_in_use_count, :upload_usages_count,
-            :cloned_status, :flags, :has_passcode)
+            :cloned_status, :flags)
 
   json.term @course.cloned_status == 1 ? '' : @course.term
   json.legacy @course.legacy?
@@ -23,6 +23,7 @@ json.course do
   json.view_count number_to_human @course.view_sum
   json.syllabus @course.syllabus.url if @course.syllabus.file?
   json.has_passcode @course.has_passcode
+  json.passcode_required @course.passcode_required?
 
   if !@course.has_passcode
     json.enroll_url "#{request.base_url}#{course_slug_path(@course.slug)}/open/enroll/"
@@ -46,7 +47,7 @@ json.course do
   end
 
   if user_role.positive? # non-student role
-    json.passcode @course.passcode
+    json.passcode @course.passcode.blank? ? nil : @course.passcode
     json.canUploadSyllabus true
   else
     if @course.passcode
