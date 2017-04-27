@@ -47,12 +47,10 @@ json.course do
   end
 
   if user_role.positive? # non-student role
-    json.passcode @course.passcode.blank? ? nil : @course.passcode
+    json.passcode @course.has_passcode ? @course.passcode : nil
     json.canUploadSyllabus true
   else
-    if @course.passcode
-      json.passcode '****'
-    end
+    json.passcode @course.has_passcode ? '****' : nil
     json.canUploadSyllabus false
   end
 end
