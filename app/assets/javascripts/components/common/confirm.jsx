@@ -42,6 +42,7 @@ const Confirm = React.createClass({
             value_key="userInput"
             onChange={this.onChange}
             editable
+            required={true}
           />
         </div>
       );

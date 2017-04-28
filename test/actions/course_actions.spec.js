@@ -53,6 +53,3 @@ describe('CourseActions', () => {
     });
   });
 });
-
-
-
