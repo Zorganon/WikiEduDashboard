@@ -146,12 +146,14 @@ describe CoursesController do
           params = { id: course.slug, course: { title: 'foo', passcode: "" } }
           put :update, params: params, format: :json
           expect(course.reload.passcode).to be_nil
+          expect(course.reload.has_passcode).to be false
         end
 
         it 'saves input if passed from params' do
           params = { id: course.slug, course: { title: 'foo', passcode: 'freddy' } }
           put :update, params: params, format: :json
           expect(course.reload.passcode).to match(/(freddy)/)
+          expect(course.reload.has_passcode).to be true
         end
 
         context'and passcode is not nil' do
@@ -160,6 +162,7 @@ describe CoursesController do
             params = { id: course.slug, course: { title: 'foo', passcode: "" } }
             put :update, params: params, format: :json
             expect(course.reload.passcode).to be_nil
+            expect(course.reload.has_passcode).to be false
           end
         end
       end
@@ -172,12 +175,14 @@ describe CoursesController do
           params = { id: course.slug, course: { title: 'foo', passcode: "" } }
           put :update, params: params, format: :json
           expect(course.reload.passcode).to match(/[a-z]{8}/)
+          expect(course.reload.has_passcode).to be true
         end
 
         it 'saves input if passed from params' do
           params = { id: course.slug, course: { title: 'foo', passcode: 'freddy' } }
           put :update, params: params, format: :json
           expect(course.reload.passcode).to match(/freddy/)
+          expect(course.reload.has_passcode).to be true
         end
 
         context 'and passcode is not nil' do
@@ -186,6 +191,7 @@ describe CoursesController do
             params = { id: course.slug, course: { title: 'foo', passcode: "" } }
             put :update, params: params, format: :json
             expect(course.reload.passcode).to match(/[a-z]{8}/)
+            expect(course.reload.has_passcode).to be true
           end
         end
       end
