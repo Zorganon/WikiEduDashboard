@@ -86,7 +86,7 @@ class Course < ActiveRecord::Base
     where('uploaded_at >= ?', course.start).where('uploaded_at <= ?', course.end)
   end, through: :students)
 
-  has_many :articles_courses, class_name: ArticlesCourses, dependent: :destroy
+  has_many :articles_courses, class_name: 'ArticlesCourses', dependent: :destroy
   has_many :articles, -> { distinct }, through: :articles_courses
   has_many :pages_edited, -> { distinct }, source: :article, through: :revisions
 
@@ -95,9 +95,9 @@ class Course < ActiveRecord::Base
   ############
   # Metadata #
   ############
-  belongs_to :home_wiki, class_name: Wiki
+  belongs_to :home_wiki, class_name: 'Wiki'
 
-  has_many :campaigns_courses, class_name: CampaignsCourses, dependent: :destroy
+  has_many :campaigns_courses, class_name: 'CampaignsCourses', dependent: :destroy
   has_many :campaigns, through: :campaigns_courses
 
   has_many :tags, dependent: :destroy
@@ -213,10 +213,13 @@ class Course < ActiveRecord::Base
   end
 
   def training_modules
-    ids = Block.joins(:week).where(weeks: { course_id: id })
-               .where.not('training_module_ids = ?', [].to_yaml)
-               .collect(&:training_module_ids).flatten
-    TrainingModule.all.select { |tm| ids.include?(tm.id) }
+    @training_modules ||= TrainingModule.all.select { |tm| training_module_ids.include?(tm.id) }
+  end
+
+  def training_module_ids
+    @training_module_ids ||= Block.joins(:week).where(weeks: { course_id: id })
+                                  .where.not('training_module_ids = ?', [].to_yaml)
+                                  .collect(&:training_module_ids).flatten
   end
 
   # The url for the on-wiki version of the course.

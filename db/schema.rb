@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418183246) do
+ActiveRecord::Schema.define(version: 20170523190741) do
 
   create_table "alerts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "course_id"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20170418183246) do
     t.bigint   "view_count",    default: 0
     t.integer  "character_sum", default: 0
     t.boolean  "new_article",   default: false
+    t.index ["article_id"], name: "index_articles_courses_on_article_id", using: :btree
+    t.index ["course_id"], name: "index_articles_courses_on_course_id", using: :btree
   end
 
   create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -85,6 +87,7 @@ ActiveRecord::Schema.define(version: 20170418183246) do
     t.integer  "order"
     t.date     "due_date"
     t.text     "training_module_ids", limit: 65535
+    t.index ["week_id"], name: "index_blocks_on_week_id", using: :btree
   end
 
   create_table "campaigns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -191,6 +194,7 @@ ActiveRecord::Schema.define(version: 20170418183246) do
     t.string   "assigned_article_title"
     t.integer  "role",                   default: 0
     t.integer  "recent_revisions",       default: 0
+    t.integer  "character_sum_draft",    default: 0
     t.index ["course_id"], name: "index_courses_users_on_course_id", using: :btree
     t.index ["user_id"], name: "index_courses_users_on_user_id", using: :btree
   end
@@ -412,6 +416,7 @@ ActiveRecord::Schema.define(version: 20170418183246) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order",      default: 1, null: false
+    t.index ["course_id"], name: "index_weeks_on_course_id", using: :btree
   end
 
   create_table "wikis", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
